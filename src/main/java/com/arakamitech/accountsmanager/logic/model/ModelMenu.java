@@ -1,4 +1,4 @@
-package com.arakamitech.accountsmanager.logic.modelmenu;
+package com.arakamitech.accountsmanager.logic.model;
 
 import com.arakamitech.accountsmanager.logic.enums.MenuType;
 import java.io.File;

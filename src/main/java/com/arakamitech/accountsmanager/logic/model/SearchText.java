@@ -1,4 +1,4 @@
-package com.arakamitech.accountsmanager.logic.modelmenu;
+package com.arakamitech.accountsmanager.logic.model;
 
 import java.awt.Color;
 import java.awt.FontMetrics;

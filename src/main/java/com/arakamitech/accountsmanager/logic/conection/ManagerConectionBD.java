@@ -1,8 +1,10 @@
 package com.arakamitech.accountsmanager.logic.conection;
 
+import com.arakamitech.accountsmanager.logic.dto.ClavesDto;
 import com.arakamitech.accountsmanager.logic.dto.ConnectionDto;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,7 +20,7 @@ public class ManagerConectionBD {
 
     private static final Logger LOGGER = Logger.getLogger("ManagerConectionBD");
 
-    public ConnectionDto createConectionBD() {
+    public ConnectionDto createConectionBD() throws SQLException {
         LOGGER.info("Inicio de la funcion createConectionBD");
         Connection connection = null;
         Statement statement = null;
@@ -27,7 +29,7 @@ public class ManagerConectionBD {
             statement = connection.createStatement();
         } catch (SQLException e) {
             LOGGER.info("Error de la funcion createConectionBD" + e);
-            e.printStackTrace();
+            throw e;
         }
         LOGGER.info("Fin de la funcion createConectionBD");
         return new ConnectionDto(connection, statement);
@@ -107,13 +109,17 @@ public class ManagerConectionBD {
         return list;
     }
 
-    public List<ClavesDto> getClaves(Statement statement, String group) {
-        LOGGER.info("Inicio de la funcion getRegisterClaves");
+    public List<ClavesDto> getClaves(Connection connectionDto, String group) {
+        LOGGER.info("Inicio de la función getClaves");
         List<ClavesDto> clavesDtoList = new ArrayList<>();
-        ClavesDto clavesDto = new ClavesDto();
-        try {
-            ResultSet resultSet = statement.executeQuery(sqlSelectClaves(group));
+
+        String query = sqlSelectClaves();
+        try (PreparedStatement statement = connectionDto.prepareStatement(query)) {
+            statement.setString(1, group);
+
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
+                ClavesDto clavesDto = new ClavesDto();  // Crear una nueva instancia en cada iteración
                 clavesDto.setNameApplication(resultSet.getString("name_application"));
                 clavesDto.setUser(resultSet.getString("user"));
                 clavesDto.setEmail(resultSet.getString("email"));
@@ -123,10 +129,9 @@ public class ManagerConectionBD {
                 clavesDtoList.add(clavesDto);
             }
         } catch (SQLException e) {
-            LOGGER.info("Error de la funcion getRegisterClaves" + e);
-            e.printStackTrace();
+            LOGGER.info("Error en la función getClaves: " + e.getMessage());
         }
-        LOGGER.info("Fin de la funcion getRegisterClaves");
+        LOGGER.info("Fin de la función getClaves");
         return clavesDtoList;
     }
 
@@ -174,8 +179,8 @@ public class ManagerConectionBD {
         return "SELECT DISTINCT `group` FROM `claves` ORDER BY `group` ASC";
     }
 
-    private String sqlSelectClaves(String group) {
-        return "SELECT * FROM `claves` WHERE `group` = " + group;
+    private String sqlSelectClaves() {
+        return "SELECT * FROM `claves` WHERE `group` = ?";
     }
 
 }

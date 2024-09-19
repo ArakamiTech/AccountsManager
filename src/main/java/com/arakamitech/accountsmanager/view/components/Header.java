@@ -12,6 +12,8 @@ public class Header extends javax.swing.JPanel {
 
     public Header() {
         initComponents();
+        jLabelSearchIcon.setIcon(new javax.swing.ImageIcon("src/main/java/com/arakamitech/accountsmanager/view/icons/Buscar.png"));
+        jLabelMenuIcon.setIcon(new javax.swing.ImageIcon("src/main/java/com/arakamitech/accountsmanager/view/icons/Menu.png"));
         setOpaque(true);
     }
 
@@ -19,19 +21,16 @@ public class Header extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        searchText1 = new com.arakamitech.accountsmanager.logic.modelmenu.SearchText();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelSearchIcon = new javax.swing.JLabel();
+        searchText1 = new com.arakamitech.accountsmanager.logic.model.SearchText();
+        jLabelMenuIcon = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(450, 45));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\crist\\Documents\\Java\\AccountsManager\\src\\main\\resources\\Buscar.png")); // NOI18N
-
         searchText1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\crist\\Documents\\Java\\AccountsManager\\src\\main\\resources\\menu.png")); // NOI18N
-        jLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jLabelMenuIcon.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -39,18 +38,18 @@ public class Header extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabelSearchIcon)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(searchText1, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addContainerGap())
+                .addComponent(searchText1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelMenuIcon)
+                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelSearchIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(searchText1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+            .addComponent(jLabelMenuIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -66,8 +65,8 @@ public class Header extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private com.arakamitech.accountsmanager.logic.modelmenu.SearchText searchText1;
+    private javax.swing.JLabel jLabelMenuIcon;
+    private javax.swing.JLabel jLabelSearchIcon;
+    private com.arakamitech.accountsmanager.logic.model.SearchText searchText1;
     // End of variables declaration//GEN-END:variables
 }

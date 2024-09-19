@@ -1,7 +1,8 @@
-package com.arakamitech.accountsmanager.view.swing;
+package com.arakamitech.accountsmanager.logic.model;
 
 import com.arakamitech.accountsmanager.logic.enums.MenuType;
-import com.arakamitech.accountsmanager.logic.modelmenu.ModelMenu;
+import com.arakamitech.accountsmanager.logic.model.ModelMenu;
+import com.arakamitech.accountsmanager.view.swing.MenuItem;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

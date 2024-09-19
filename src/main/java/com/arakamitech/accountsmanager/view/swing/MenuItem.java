@@ -1,7 +1,7 @@
 package com.arakamitech.accountsmanager.view.swing;
 
 import com.arakamitech.accountsmanager.logic.enums.MenuType;
-import com.arakamitech.accountsmanager.logic.modelmenu.ModelMenu;
+import com.arakamitech.accountsmanager.logic.model.ModelMenu;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;

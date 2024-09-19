@@ -1,4 +1,4 @@
-package com.arakamitech.accountsmanager.logic.conection;
+package com.arakamitech.accountsmanager.logic.dto;
 
 /**
  *

@@ -1,9 +1,10 @@
 package com.arakamitech.accountsmanager.view.components;
 
 import com.arakamitech.accountsmanager.logic.conection.ManagerConectionBD;
+import com.arakamitech.accountsmanager.logic.dto.AdminBDConnection;
 import com.arakamitech.accountsmanager.logic.dto.ConnectionDto;
 import com.arakamitech.accountsmanager.logic.enums.MenuType;
-import com.arakamitech.accountsmanager.logic.modelmenu.ModelMenu;
+import com.arakamitech.accountsmanager.logic.model.ModelMenu;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -12,8 +13,10 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -22,18 +25,20 @@ import javax.swing.JFrame;
  */
 public class Menu extends javax.swing.JPanel {
 
+    private static final Logger LOGGER = Logger.getLogger("Menu");
+
+    private int x;
+    private int y;
+
     public Menu() {
         initComponents();
+        jLabelTitle.setIcon(new javax.swing.ImageIcon("src/main/java/com/arakamitech/accountsmanager/view/icons/Logo.jpg"));
         listMenu1.setOpaque(false);
         setOpaque(false);
-        Init();
     }
 
-    private void Init() {
-        ManagerConectionBD managerConectionBD = new ManagerConectionBD();
-        ConnectionDto connectionDto = managerConectionBD.createConectionBD();
+    public void Init(ManagerConectionBD managerConectionBD, ConnectionDto connectionDto) throws SQLException {
         List<String> listMenu = new ArrayList<>();
-        managerConectionBD.createTable(connectionDto.getConnection(), connectionDto.getStatement());
         listMenu1.addItem(new ModelMenu("", "Gestion", MenuType.TITLE));
         listMenu1.addItem((new ModelMenu("Crear", "Crear", MenuType.MENU)));
 
@@ -50,7 +55,7 @@ public class Menu extends javax.swing.JPanel {
 
         jPanelMoving = new javax.swing.JPanel();
         jLabelTitle = new javax.swing.JLabel();
-        listMenu1 = new com.arakamitech.accountsmanager.view.swing.ListMenu<>();
+        listMenu1 = new com.arakamitech.accountsmanager.logic.model.ListMenu<>();
         jScrollPane1 = new javax.swing.JScrollPane();
 
         setPreferredSize(new java.awt.Dimension(231, 800));
@@ -60,7 +65,6 @@ public class Menu extends javax.swing.JPanel {
         jLabelTitle.setBackground(new java.awt.Color(255, 255, 255));
         jLabelTitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelTitle.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelTitle.setIcon(new javax.swing.ImageIcon("C:\\Users\\crist\\Documents\\Java\\AccountsManager\\resources\\Logo.jpeg")); // NOI18N
         jLabelTitle.setText("AccountsManager");
 
         javax.swing.GroupLayout jPanelMovingLayout = new javax.swing.GroupLayout(jPanelMoving);
@@ -117,9 +121,12 @@ public class Menu extends javax.swing.JPanel {
         g2.fillRect(getWidth() - 20, 0, getWidth(), getHeight());
         super.paintChildren(grphcs);
     }
-
-    private int x;
-    private int y;
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelTitle;
+    private javax.swing.JPanel jPanelMoving;
+    private javax.swing.JScrollPane jScrollPane1;
+    private com.arakamitech.accountsmanager.logic.model.ListMenu<String> listMenu1;
+    // End of variables declaration//GEN-END:variables
 
     public void initMoving(JFrame frame) {
         jPanelMoving.addMouseListener(new MouseAdapter() {
@@ -138,10 +145,4 @@ public class Menu extends javax.swing.JPanel {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabelTitle;
-    private javax.swing.JPanel jPanelMoving;
-    private javax.swing.JScrollPane jScrollPane1;
-    private com.arakamitech.accountsmanager.view.swing.ListMenu<String> listMenu1;
-    // End of variables declaration//GEN-END:variables
 }
