@@ -1,7 +1,5 @@
 package com.arakamitech.accountsmanager.logic.dto;
 
-import com.arakamitech.accountsmanager.logic.conection.ManagerConectionBD;
-
 /**
  *
  * @author cristhian

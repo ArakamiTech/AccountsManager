@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.arakamitech.accountsmanager.logic.dto;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -11,9 +8,13 @@ import java.sql.Statement;
  *
  * @author cristhian
  */
-public class ConnectionDto {
+public class ConnectionDto implements Serializable{
 
-    private Connection connection;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Connection connection;
     private Statement statement;
 
     public Connection getConnection() {

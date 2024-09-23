@@ -1,7 +1,6 @@
 package com.arakamitech.accountsmanager.view.swing;
 
 import com.arakamitech.accountsmanager.logic.conection.ManagerConectionBD;
-import com.arakamitech.accountsmanager.logic.dto.AdminBDConnection;
 import com.arakamitech.accountsmanager.logic.dto.ClavesDto;
 import com.arakamitech.accountsmanager.logic.dto.ConnectionDto;
 import java.awt.Color;
@@ -17,11 +16,7 @@ import javax.swing.JScrollPane;
  */
 public class FormHome extends javax.swing.JPanel {
 
-    private static final Logger LOGGER = Logger.getLogger("FormHome");
-    AdminBDConnection adminBDConnection = new AdminBDConnection();
-    private ManagerConectionBD managerConectionBD = null;
-
-    public FormHome() {
+    public FormHome(ManagerConectionBD managerConectionBD, ConnectionDto connectionDto, String group) {
         initComponents();
         jScrollPane1.setVerticalScrollBar(new JScrollBar());
         jScrollPane1.getVerticalScrollBar().setBackground(Color.WHITE);
@@ -29,11 +24,14 @@ public class FormHome extends javax.swing.JPanel {
         JPanel panel = new JPanel();
         panel.setBackground(Color.WHITE);
         jScrollPane1.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
+        addRow(managerConectionBD, connectionDto, group);
+        jLabel1.setText("Cuentas Guardadas de " + group);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        com.arakamitech.accountsmanager.view.swing.PanelBorder panelBorder1;
 
         panelBorder1 = new com.arakamitech.accountsmanager.view.swing.PanelBorder();
         jLabel1 = new javax.swing.JLabel();
@@ -46,7 +44,6 @@ public class FormHome extends javax.swing.JPanel {
 
         jLabel1.setBackground(new java.awt.Color(127, 127, 127));
         jLabel1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jLabel1.setText("Cuentas Guardadas");
 
         jScrollPane1.setBorder(null);
 
@@ -62,6 +59,7 @@ public class FormHome extends javax.swing.JPanel {
                 false, false, false, false, false
             };
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
@@ -88,7 +86,7 @@ public class FormHome extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -113,17 +111,20 @@ public class FormHome extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private com.arakamitech.accountsmanager.view.swing.PanelBorder panelBorder1;
     private com.arakamitech.accountsmanager.view.swing.Table table;
     // End of variables declaration//GEN-END:variables
 
-    public void addRow(ManagerConectionBD managerConectionBD, ConnectionDto connectionDto) {
-        List<ClavesDto> clavesDtoList = managerConectionBD.getClaves(connectionDto.getConnection(), "group");
+    private static final Logger LOGGER = Logger.getLogger("FormHome");
+    
+    public void addRow(ManagerConectionBD managerConectionBD, ConnectionDto connectionDto, String group) {
+    	LOGGER.info("Inicio metodo addRow llenando la tabla");
+        List<ClavesDto> clavesDtoList = managerConectionBD.getClaves(connectionDto, group);
         for (int i = 0; i < clavesDtoList.size(); i++) {
             table.addRow(new Object[]{clavesDtoList.get(i).getNameApplication(), clavesDtoList.get(i).getUser(),
                 clavesDtoList.get(i).getEmail(), clavesDtoList.get(i).getPassword(),
                 clavesDtoList.get(i).getDescription()});
         }
+        LOGGER.info("Inicio metodo addRow llenando la tabla");
     }
 
 }

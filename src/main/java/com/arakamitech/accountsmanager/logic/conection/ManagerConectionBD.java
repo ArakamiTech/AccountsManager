@@ -2,124 +2,133 @@ package com.arakamitech.accountsmanager.logic.conection;
 
 import com.arakamitech.accountsmanager.logic.dto.ClavesDto;
 import com.arakamitech.accountsmanager.logic.dto.ConnectionDto;
-import java.sql.Connection;
+
+import java.io.Serializable;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-/**
- *
- * @author cristhian
- */
-public class ManagerConectionBD {
+public class ManagerConectionBD implements Serializable {
 
-    private static final Logger LOGGER = Logger.getLogger("ManagerConectionBD");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger("ManagerConectionBD");
 
+	private static final String UPDATE = "UPDATE `claves` SET `name_application` = ?, `user` = ?, `email` = ?, `password` = ?, `description` = ?, `group` = ? WHERE `id_claves` = ?";
+	private static final String INSERT = "INSERT INTO `claves` (`name_application`, `user`, `email`, `password`, `description`, `group`) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String DELETE = "DELETE FROM `claves` WHERE `id_claves` = ?";
+	private static final String SELECT_GROUP = "SELECT DISTINCT `group` FROM `claves` ORDER BY `group` ASC";
+	private static final String SELECT_CLAVES = "SELECT * FROM `claves` WHERE `group` = ?";
+    
     public ConnectionDto createConectionBD() throws SQLException {
         LOGGER.info("Inicio de la funcion createConectionBD");
-        Connection connection = null;
-        Statement statement = null;
         try {
-            connection = DriverManager.getConnection("jdbc:h2:C:/AccountsManager/data", "sa", "");
-            statement = connection.createStatement();
+            var connection = DriverManager.getConnection("jdbc:h2:C:/AccountsManager/data", "sa", "");
+            var statement = connection.createStatement();
+            LOGGER.info("Fin de la funcion createConectionBD");
+            return new ConnectionDto(connection, statement);
         } catch (SQLException e) {
-            LOGGER.info("Error de la funcion createConectionBD" + e);
+            LOGGER.severe("Error en la función createConectionBD");
             throw e;
         }
-        LOGGER.info("Fin de la funcion createConectionBD");
-        return new ConnectionDto(connection, statement);
     }
 
-    public ConnectionDto closeConectionBD(Connection connection, Statement statement) {
-        LOGGER.info("Inicio de la funcion closeConectionBD");
+    public void closeConectionBD(ConnectionDto connectionDto) {
+        LOGGER.info("Inicio de la función closeConectionBD");
         try {
-            statement.close();
-            connection.close();
+            if (connectionDto.getStatement() != null) {
+                connectionDto.getStatement().close();
+            }
+            if (connectionDto.getConnection() != null) {
+                connectionDto.getConnection().close();
+            }
         } catch (SQLException e) {
-            LOGGER.info("Error de la funcion closeConectionBD" + e);
-            e.printStackTrace();
+            LOGGER.severe("Error en la función closeConectionBD: " + e.getMessage());
         }
-        LOGGER.info("Fin de la funcion closeConectionBD");
-        return new ConnectionDto(connection, statement);
+        LOGGER.info("Fin de la función closeConectionBD");
     }
 
-    public void createTable(Connection connection, Statement statement) {
+    public void createTable(ConnectionDto connectionDto) {
         try {
-            LOGGER.info("Inicio de la funcion createTable");
-            statement.execute(sqlCreate());
-            LOGGER.info("Fin de la funcion createTable");
+            LOGGER.info("Inicio de la función createTable");
+            connectionDto.getStatement().execute(sqlCreate());
+            LOGGER.info("Fin de la función createTable");
         } catch (SQLException e) {
-            LOGGER.info("Error de la funcion createTable" + e);
-            e.printStackTrace();
-        }
-    }
-
-    public void createRegister(Statement statement, String nameApplication, String user, String email, String password, String description, String group) {
-        try {
-            LOGGER.info("Inicio de la funcion createRegister");
-            statement.execute(sqlInsert(nameApplication, user, email, password, description, group));
-            LOGGER.info("Fin de la funcion createRegister");
-        } catch (SQLException e) {
-            LOGGER.info("Error de la funcion createRegister" + e);
-            e.printStackTrace();
+            LOGGER.severe("Error en la función createTable: " + e.getMessage());
         }
     }
 
-    public void editRegister(Statement statement, ClavesDto clavesDto) {
-        try {
-            LOGGER.info("Inicio de la funcion editRegister");
-            statement.execute(sqlUpdate(clavesDto));
-            LOGGER.info("Fin de la funcion editRegister");
+    public void createRegister(ConnectionDto connectionDto, String nameApplication, String user, String email, String password, String description, String group) {
+        LOGGER.info("Inicio de la funcion createRegister");
+        try (var statement = connectionDto.getConnection().prepareStatement(INSERT)) {
+            statement.setString(1, nameApplication);
+            statement.setString(2, user);
+            statement.setString(3, email);
+            statement.setString(4, password);
+            statement.setString(5, description);
+            statement.setString(6, group);
+            statement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.info("Error de la funcion editRegister" + e);
-            e.printStackTrace();
+            LOGGER.severe("Error en createRegister: " + e.getMessage());
         }
+        LOGGER.info("Fin de la funcion createRegister");
     }
 
-    public void deleteRegister(Statement statement, int idClaves) {
-        try {
-            LOGGER.info("Inicio de la funcion deleteRegister");
-            statement.execute(sqlDelete(idClaves));
-            LOGGER.info("Fin de la funcion deleteRegister");
+    public void editRegister(ConnectionDto connectionDto, ClavesDto clavesDto) {
+        LOGGER.info("Inicio de la funcion editRegister");
+        try (var statement = connectionDto.getConnection().prepareStatement(UPDATE)) {
+            statement.setString(1, clavesDto.getNameApplication());
+            statement.setString(2, clavesDto.getUser());
+            statement.setString(3, clavesDto.getEmail());
+            statement.setString(4, clavesDto.getPassword());
+            statement.setString(5, clavesDto.getDescription());
+            statement.setString(6, clavesDto.getGroup());
+            statement.setInt(7, clavesDto.getIdClaves());
+            statement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.info("Error de la funcion deleteRegister" + e);
-            e.printStackTrace();
+            LOGGER.severe("Error en editRegister: " + e.getMessage());
         }
+        LOGGER.info("Fin de la funcion editRegister");
     }
 
-    public List<String> getRegisterToMenu(Statement statement) {
+    public void deleteRegister(ConnectionDto connectionDto, int idClaves) {
+        LOGGER.info("Inicio de la funcion deleteRegister");
+        try (var statement = connectionDto.getConnection().prepareStatement(DELETE)) {
+            statement.setInt(1, idClaves);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.severe("Error en deleteRegister: " + e.getMessage());
+        }
+        LOGGER.info("Fin de la funcion deleteRegister");
+    }
+
+    public List<String> getRegisterToMenu(ConnectionDto connectionDto) {
         LOGGER.info("Inicio de la funcion getRegisterToMenu");
-        List<String> list = new ArrayList<>();
-        try {
-            ResultSet resultSet = statement.executeQuery(sqlSelectGroup());
-
+        var list = new ArrayList<String>();
+        try (var statement = connectionDto.getConnection().prepareStatement(SELECT_GROUP)) {
+            var resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 list.add(resultSet.getString("group"));
             }
         } catch (SQLException e) {
-            LOGGER.info("Error de la funcion getRegisterToMenu" + e);
-            e.printStackTrace();
+            LOGGER.severe("Error en getRegisterToMenu: " + e.getMessage());
         }
         LOGGER.info("Fin de la funcion getRegisterToMenu");
         return list;
     }
 
-    public List<ClavesDto> getClaves(Connection connectionDto, String group) {
+    public List<ClavesDto> getClaves(ConnectionDto connectionDto, String group) {
         LOGGER.info("Inicio de la función getClaves");
-        List<ClavesDto> clavesDtoList = new ArrayList<>();
-
-        String query = sqlSelectClaves();
-        try (PreparedStatement statement = connectionDto.prepareStatement(query)) {
+        var clavesDtoList = new ArrayList<ClavesDto>();
+        try (var statement = connectionDto.getConnection().prepareStatement(SELECT_CLAVES)) {
             statement.setString(1, group);
-
-            ResultSet resultSet = statement.executeQuery();
+            var resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                ClavesDto clavesDto = new ClavesDto();  // Crear una nueva instancia en cada iteración
+                var clavesDto = new ClavesDto();
                 clavesDto.setNameApplication(resultSet.getString("name_application"));
                 clavesDto.setUser(resultSet.getString("user"));
                 clavesDto.setEmail(resultSet.getString("email"));
@@ -129,7 +138,7 @@ public class ManagerConectionBD {
                 clavesDtoList.add(clavesDto);
             }
         } catch (SQLException e) {
-            LOGGER.info("Error en la función getClaves: " + e.getMessage());
+            LOGGER.severe("Error en la función getClaves: " + e.getMessage());
         }
         LOGGER.info("Fin de la función getClaves");
         return clavesDtoList;
@@ -146,41 +155,6 @@ public class ManagerConectionBD {
                 + "  `group` VARCHAR(45) NOT NULL,"
                 + "  PRIMARY KEY (`id_claves`),"
                 + "  UNIQUE (`id_claves`))";
-    }
-
-    private String sqlInsert(String nameApplication, String user, String email, String password, String description, String group) {
-        return "INSERT INTO `claves` ("
-                + "`name_application`, "
-                + "`user`, "
-                + "`email`, "
-                + "`password`, "
-                + "`description`, "
-                + "`group`) "
-                + "VALUES "
-                + "('" + nameApplication + "', '" + user + "', '" + email + "', '" + password + "', '" + description + "', '" + group + "');";
-    }
-
-    private String sqlUpdate(ClavesDto clavesDto) {
-        return "UPDATE `claves` "
-                + "SET `name_application` = '" + clavesDto.getNameApplication() + "', "
-                + "`user` = '" + clavesDto.getUser() + "', "
-                + "`email` = '" + clavesDto.getEmail() + "', "
-                + "`password` = '" + clavesDto.getPassword() + "', "
-                + "`description` = '" + clavesDto.getPassword() + "', "
-                + "`group` = '" + clavesDto.getGroup() + "' "
-                + "WHERE `id_claves` = '" + clavesDto.getIdClaves() + "'";
-    }
-
-    private String sqlDelete(int idClaves) {
-        return "DELETE FROM `claves` WHERE `id_claves` = '" + idClaves + "'";
-    }
-
-    private String sqlSelectGroup() {
-        return "SELECT DISTINCT `group` FROM `claves` ORDER BY `group` ASC";
-    }
-
-    private String sqlSelectClaves() {
-        return "SELECT * FROM `claves` WHERE `group` = ?";
     }
 
 }

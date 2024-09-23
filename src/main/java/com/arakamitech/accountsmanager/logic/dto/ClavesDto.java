@@ -13,12 +13,10 @@ public class ClavesDto {
     private String password;
     private String description;
     private String group;
-
-    // Constructor vacío
+    
     public ClavesDto() {
     }
 
-    // Constructor con todos los campos
     public ClavesDto(int idClaves, String nameApplication, String user, String email, String password, String description, String group) {
         this.idClaves = idClaves;
         this.nameApplication = nameApplication;
@@ -29,7 +27,6 @@ public class ClavesDto {
         this.group = group;
     }
 
-    // Getters y Setters
     public int getIdClaves() {
         return idClaves;
     }

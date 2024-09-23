@@ -14,8 +14,6 @@ import java.awt.RenderingHints;
  */
 public class MenuItem extends javax.swing.JPanel {
 
-    private boolean selected;
-
     public MenuItem(ModelMenu data) {
         initComponents();
         setOpaque(false);
@@ -25,26 +23,10 @@ public class MenuItem extends javax.swing.JPanel {
         } else if (data.getType() == MenuType.TITLE) {
             jLabelIcon.setText(data.getName());
             jLabelIcon.setFont(new Font("sansserif", 1, 12));
-            jLabelName.setVisible(true);
+            jLabelName.setVisible(false);
         } else {
             jLabelName.setText(" ");
         }
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-        repaint();
-    }
-
-    @Override
-    protected void paintComponent(Graphics grphcs) {
-        if (selected) {
-            Graphics2D g2 = (Graphics2D) grphcs;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(new Color(255, 255, 255, 80));
-            g2.fillRoundRect(10, 0, getWidth() - 20, getHeight(), 5, 5);
-        }
-        super.paintComponent(grphcs);
     }
 
     @SuppressWarnings("unchecked")
@@ -82,9 +64,37 @@ public class MenuItem extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelIcon;
     private javax.swing.JLabel jLabelName;
     // End of variables declaration//GEN-END:variables
+
+    private boolean selected;
+    private boolean over;
+
+    @Override
+    protected void paintComponent(Graphics grphcs) {
+        if (selected || over) {
+            Graphics2D g2 = (Graphics2D) grphcs;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            if (selected) {
+                g2.setColor(new Color(255, 255, 255, 80));
+            } else {
+                g2.setColor(new Color(255, 255, 255, 20));
+            }
+            g2.fillRoundRect(10, 0, getWidth() - 20, getHeight(), 5, 5);
+        }
+        super.paintComponent(grphcs);
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+        repaint();
+    }
+
+    public void setOver(boolean over) {
+        this.over = over;
+        repaint();
+    }
+
 }

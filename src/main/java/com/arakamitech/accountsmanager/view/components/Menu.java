@@ -1,9 +1,9 @@
 package com.arakamitech.accountsmanager.view.components;
 
 import com.arakamitech.accountsmanager.logic.conection.ManagerConectionBD;
-import com.arakamitech.accountsmanager.logic.dto.AdminBDConnection;
 import com.arakamitech.accountsmanager.logic.dto.ConnectionDto;
 import com.arakamitech.accountsmanager.logic.enums.MenuType;
+import com.arakamitech.accountsmanager.logic.event.EventMenuSelected;
 import com.arakamitech.accountsmanager.logic.model.ModelMenu;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -13,7 +13,6 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -25,11 +24,6 @@ import javax.swing.JFrame;
  */
 public class Menu extends javax.swing.JPanel {
 
-    private static final Logger LOGGER = Logger.getLogger("Menu");
-
-    private int x;
-    private int y;
-
     public Menu() {
         initComponents();
         jLabelTitle.setIcon(new javax.swing.ImageIcon("src/main/java/com/arakamitech/accountsmanager/view/icons/Logo.jpg"));
@@ -37,21 +31,10 @@ public class Menu extends javax.swing.JPanel {
         setOpaque(false);
     }
 
-    public void Init(ManagerConectionBD managerConectionBD, ConnectionDto connectionDto) throws SQLException {
-        List<String> listMenu = new ArrayList<>();
-        listMenu1.addItem(new ModelMenu("", "Gestion", MenuType.TITLE));
-        listMenu1.addItem((new ModelMenu("Crear", "Crear", MenuType.MENU)));
-
-        listMenu1.addItem(new ModelMenu("", "Claves", MenuType.TITLE));
-        listMenu = managerConectionBD.getRegisterToMenu(connectionDto.getStatement());
-        for (int i = 0; i < listMenu.size(); i++) {
-            listMenu1.addItem((new ModelMenu(listMenu.get(i), listMenu.get(i), MenuType.MENU)));
-        }
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        javax.swing.JScrollPane jScrollPane1;
 
         jPanelMoving = new javax.swing.JPanel();
         jLabelTitle = new javax.swing.JLabel();
@@ -124,25 +107,48 @@ public class Menu extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelTitle;
     private javax.swing.JPanel jPanelMoving;
-    private javax.swing.JScrollPane jScrollPane1;
     private com.arakamitech.accountsmanager.logic.model.ListMenu<String> listMenu1;
     // End of variables declaration//GEN-END:variables
+
+    private int posX;
+    private int posY;
+    private EventMenuSelected event;
+    private List<String> listMenu = new ArrayList<>();
 
     public void initMoving(JFrame frame) {
         jPanelMoving.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {
-                x = me.getX();
-                y = me.getY();
+            	posX = me.getX();
+            	posY = me.getY();
             }
         });
 
         jPanelMoving.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent me) {
-                frame.setLocation(me.getXOnScreen() - x, me.getYOnScreen() - y);
+                frame.setLocation(me.getXOnScreen() - posX, me.getYOnScreen() - posY);
             }
         });
+    }
+
+    public void init(ManagerConectionBD managerConectionBD, ConnectionDto connectionDto) {
+        listMenu1.addItem(new ModelMenu("", "Gestion", MenuType.TITLE));
+        listMenu1.addItem((new ModelMenu("Crear", "Crear", MenuType.MENU)));
+        listMenu1.addItem(new ModelMenu("", "Claves", MenuType.TITLE));
+        listMenu = managerConectionBD.getRegisterToMenu(connectionDto);
+        for (int i = 0; i < listMenu.size(); i++) {
+            listMenu1.addItem((new ModelMenu(listMenu.get(i), listMenu.get(i), MenuType.MENU)));
+        }
+    }
+
+    public void addEventMenuSelected(EventMenuSelected event) {
+        this.event = event;
+        listMenu1.addEventMenuSelected(event);
+    }
+
+    public List<String> getListItemsMenu() {
+        return listMenu;
     }
 
 }
