@@ -21,8 +21,6 @@ public class Principal extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        com.arakamitech.accountsmanager.view.swing.PanelBorder panelBorder1;
-        com.arakamitech.accountsmanager.view.components.Header header2;
 
         panelBorder1 = new com.arakamitech.accountsmanager.view.swing.PanelBorder();
         menu = new com.arakamitech.accountsmanager.view.components.Menu();
@@ -48,9 +46,7 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addComponent(header2, javax.swing.GroupLayout.PREFERRED_SIZE, 894, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
         panelBorder1Layout.setVerticalGroup(
@@ -107,10 +103,10 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    
+    private com.arakamitech.accountsmanager.view.components.Header header2;
     private javax.swing.JPanel jPanelMain;
     private com.arakamitech.accountsmanager.view.components.Menu menu;
-    
+    private com.arakamitech.accountsmanager.view.swing.PanelBorder panelBorder1;
     // End of variables declaration//GEN-END:variables
 
     private ConnectionDto connectionDto = null;

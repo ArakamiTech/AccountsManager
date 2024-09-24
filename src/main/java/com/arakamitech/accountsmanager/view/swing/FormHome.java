@@ -25,16 +25,15 @@ public class FormHome extends javax.swing.JPanel {
         panel.setBackground(Color.WHITE);
         jScrollPane1.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         addRow(managerConectionBD, connectionDto, group);
-        jLabel1.setText("Cuentas Guardadas de " + group);
+        jLabelTitle.setText("Cuentas Guardadas de " + group);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        com.arakamitech.accountsmanager.view.swing.PanelBorder panelBorder1;
 
         panelBorder1 = new com.arakamitech.accountsmanager.view.swing.PanelBorder();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new com.arakamitech.accountsmanager.view.swing.Table();
 
@@ -42,8 +41,8 @@ public class FormHome extends javax.swing.JPanel {
 
         panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setBackground(new java.awt.Color(127, 127, 127));
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        jLabelTitle.setBackground(new java.awt.Color(127, 127, 127));
+        jLabelTitle.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
 
         jScrollPane1.setBorder(null);
 
@@ -59,7 +58,6 @@ public class FormHome extends javax.swing.JPanel {
                 false, false, false, false, false
             };
 
-            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
@@ -74,7 +72,7 @@ public class FormHome extends javax.swing.JPanel {
                 .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addComponent(jLabel1))
+                        .addComponent(jLabelTitle))
                     .addGroup(panelBorder1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)))
@@ -84,7 +82,7 @@ public class FormHome extends javax.swing.JPanel {
             panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelBorder1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel1)
+                .addComponent(jLabelTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addContainerGap())
@@ -109,8 +107,9 @@ public class FormHome extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelTitle;
     private javax.swing.JScrollPane jScrollPane1;
+    private com.arakamitech.accountsmanager.view.swing.PanelBorder panelBorder1;
     private com.arakamitech.accountsmanager.view.swing.Table table;
     // End of variables declaration//GEN-END:variables
 
