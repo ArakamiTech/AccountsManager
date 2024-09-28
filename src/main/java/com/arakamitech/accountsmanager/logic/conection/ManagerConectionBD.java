@@ -3,6 +3,7 @@ package com.arakamitech.accountsmanager.logic.conection;
 import com.arakamitech.accountsmanager.logic.dto.ClavesDto;
 import com.arakamitech.accountsmanager.logic.dto.ConnectionDto;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,17 +14,18 @@ import java.util.logging.Logger;
 public class ManagerConectionBD implements Serializable {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private static final Logger LOGGER = Logger.getLogger("ManagerConectionBD");
+     *
+     */
+    @Serial
+    private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = Logger.getLogger("ManagerConectionBD");
 
-	private static final String UPDATE = "UPDATE `claves` SET `name_application` = ?, `user` = ?, `email` = ?, `password` = ?, `description` = ?, `group` = ? WHERE `id_claves` = ?";
-	private static final String INSERT = "INSERT INTO `claves` (`name_application`, `user`, `email`, `password`, `description`, `group`) VALUES (?, ?, ?, ?, ?, ?)";
-	private static final String DELETE = "DELETE FROM `claves` WHERE `id_claves` = ?";
-	private static final String SELECT_GROUP = "SELECT DISTINCT `group` FROM `claves` ORDER BY `group` ASC";
-	private static final String SELECT_CLAVES = "SELECT * FROM `claves` WHERE `group` = ?";
-    
+    private static final String UPDATE = "UPDATE `claves` SET `name_application` = ?, `user` = ?, `email` = ?, `password` = ?, `description` = ?, `group` = ?, `key` = ?, `iv` = ? WHERE `id_claves` = ?";
+    private static final String INSERT = "INSERT INTO `claves` (`name_application`, `user`, `email`, `password`, `description`, `group`, `key`, `iv`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String DELETE = "DELETE FROM `claves` WHERE `id_claves` = ?";
+    private static final String SELECT_GROUP = "SELECT DISTINCT `group` FROM `claves` ORDER BY `group` ASC";
+    private static final String SELECT_CLAVES = "SELECT * FROM `claves` WHERE `group` = ?";
+
     public ConnectionDto createConectionBD() throws SQLException {
         LOGGER.info("Inicio de la funcion createConectionBD");
         try {
@@ -62,15 +64,17 @@ public class ManagerConectionBD implements Serializable {
         }
     }
 
-    public void createRegister(ConnectionDto connectionDto, String nameApplication, String user, String email, String password, String description, String group) {
+    public void createRegister(ConnectionDto connectionDto, ClavesDto clavesDto) {
         LOGGER.info("Inicio de la funcion createRegister");
         try (var statement = connectionDto.getConnection().prepareStatement(INSERT)) {
-            statement.setString(1, nameApplication);
-            statement.setString(2, user);
-            statement.setString(3, email);
-            statement.setString(4, password);
-            statement.setString(5, description);
-            statement.setString(6, group);
+            statement.setString(1, clavesDto.getNameApplication());
+            statement.setString(2, clavesDto.getUser());
+            statement.setString(3, clavesDto.getEmail());
+            statement.setString(4, clavesDto.getPassword());
+            statement.setString(5, clavesDto.getDescription());
+            statement.setString(6, clavesDto.getGroup());
+            statement.setString(7, clavesDto.getKey());
+            statement.setString(8, clavesDto.getIv());
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.severe("Error en createRegister: " + e.getMessage());
@@ -87,7 +91,9 @@ public class ManagerConectionBD implements Serializable {
             statement.setString(4, clavesDto.getPassword());
             statement.setString(5, clavesDto.getDescription());
             statement.setString(6, clavesDto.getGroup());
-            statement.setInt(7, clavesDto.getIdClaves());
+            statement.setString(7, clavesDto.getKey());
+            statement.setString(8, clavesDto.getIv());
+            statement.setInt(9, clavesDto.getIdClaves());
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.severe("Error en editRegister: " + e.getMessage());
@@ -135,12 +141,14 @@ public class ManagerConectionBD implements Serializable {
                 clavesDto.setPassword(resultSet.getString("password"));
                 clavesDto.setDescription(resultSet.getString("description"));
                 clavesDto.setGroup(resultSet.getString("group"));
+                clavesDto.setKey(resultSet.getString("key"));
+                clavesDto.setIv(resultSet.getString("iv"));
                 clavesDtoList.add(clavesDto);
             }
         } catch (SQLException e) {
             LOGGER.severe("Error en la función getClaves: " + e.getMessage());
         }
-        LOGGER.info("Fin de la función getClaves");
+        LOGGER.info("Fin de la función getClaves" + clavesDtoList.size());
         return clavesDtoList;
     }
 
@@ -150,9 +158,11 @@ public class ManagerConectionBD implements Serializable {
                 + "  `name_application` VARCHAR(45) NOT NULL,"
                 + "  `user` VARCHAR(45) NULL,"
                 + "  `email` VARCHAR(45) NULL,"
-                + "  `password` VARCHAR(45) NOT NULL,"
+                + "  `password` VARCHAR(100) NOT NULL,"
                 + "  `description` VARCHAR(45) NULL,"
                 + "  `group` VARCHAR(45) NOT NULL,"
+                + "  `key` VARCHAR(100) NOT NULL,"
+                + "  `iv` VARCHAR(100) NOT NULL,"
                 + "  PRIMARY KEY (`id_claves`),"
                 + "  UNIQUE (`id_claves`))";
     }

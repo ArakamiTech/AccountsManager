@@ -10,16 +10,18 @@ import java.awt.RenderingHints;
  */
 public class Header extends javax.swing.JPanel {
 
-    public Header() {
+    private static final long serialVersionUID = 1L;
+	public Header() {
         initComponents();
         jLabelSearchIcon.setIcon(new javax.swing.ImageIcon("src/main/java/com/arakamitech/accountsmanager/view/icons/Buscar.png"));
         jLabelMenuIcon.setIcon(new javax.swing.ImageIcon("src/main/java/com/arakamitech/accountsmanager/view/icons/Menu.png"));
         setOpaque(true);
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        final com.arakamitech.accountsmanager.logic.model.SearchText searchText1;
 
         jLabelSearchIcon = new javax.swing.JLabel();
         searchText1 = new com.arakamitech.accountsmanager.logic.model.SearchText();
@@ -67,6 +69,5 @@ public class Header extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelMenuIcon;
     private javax.swing.JLabel jLabelSearchIcon;
-    private com.arakamitech.accountsmanager.logic.model.SearchText searchText1;
     // End of variables declaration//GEN-END:variables
 }

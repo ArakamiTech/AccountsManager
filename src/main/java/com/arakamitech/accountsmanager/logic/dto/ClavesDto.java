@@ -1,7 +1,6 @@
 package com.arakamitech.accountsmanager.logic.dto;
 
 /**
- *
  * @author cristhian
  */
 public class ClavesDto {
@@ -13,22 +12,31 @@ public class ClavesDto {
     private String password;
     private String description;
     private String group;
-    
-    public ClavesDto() {
-    }
+    private String key;
+    private String iv;
 
-    public ClavesDto(int idClaves, String nameApplication, String user, String email, String password, String description, String group) {
-        this.idClaves = idClaves;
-        this.nameApplication = nameApplication;
-        this.user = user;
-        this.email = email;
-        this.password = password;
-        this.description = description;
-        this.group = group;
+    public ClavesDto() {
+        // default imple
     }
 
     public int getIdClaves() {
         return idClaves;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getIv() {
+        return iv;
+    }
+
+    public void setIv(String iv) {
+        this.iv = iv;
     }
 
     public void setIdClaves(int idClaves) {

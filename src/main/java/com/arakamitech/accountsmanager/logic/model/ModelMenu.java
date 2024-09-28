@@ -48,7 +48,6 @@ public class ModelMenu {
         File imgFile = new File(filePath);
         if (!imgFile.exists()) {
             filePath = workingDir + "/src/main/java/com/arakamitech/accountsmanager/view/icons/" + icon + ".PNG";
-            imgFile = new File(filePath);
         }
 
         return new ImageIcon(filePath);

@@ -14,8 +14,8 @@ public class ConnectionDto implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Connection connection;
-    private Statement statement;
+    private transient Connection connection;
+    private transient Statement statement;
 
     public Connection getConnection() {
         return connection;

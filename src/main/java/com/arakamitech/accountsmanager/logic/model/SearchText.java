@@ -15,7 +15,12 @@ import java.awt.Insets;
  */
 public class SearchText extends JTextField {
 
-    public SearchText() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public SearchText() {
         setBorder(new EmptyBorder(5, 5, 5, 5));
         setSelectionColor(new Color(220, 204, 182));
     }

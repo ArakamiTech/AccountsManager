@@ -2,8 +2,7 @@ package com.arakamitech.accountsmanager.view.swing;
 
 import java.awt.Color;
 import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,23 +12,38 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Table extends JTable {
 
-    public Table() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public Table() {
         setShowHorizontalLines(true);
         setGridColor(new Color(230, 230, 230));
         setRowHeight(40);
         getTableHeader().setReorderingAllowed(false);
         getTableHeader().setDefaultRenderer(new DefaultTableCellRenderer() {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 TableHeader header = new TableHeader(value + "");
                 if (column == 4) {
-                    header.setHorizontalAlignment(JLabel.CENTER);
+                    header.setHorizontalAlignment(SwingConstants.CENTER);
                 }
                 return header;
             }
         });
         setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component com = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 com.setBackground(Color.WHITE);

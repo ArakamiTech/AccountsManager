@@ -10,12 +10,13 @@ import java.awt.RenderingHints;
  */
 public class PanelBorder extends javax.swing.JPanel {
 
-    public PanelBorder() {
+    private static final long serialVersionUID = 1L;
+
+	public PanelBorder() {
         initComponents();
         setOpaque(false);
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

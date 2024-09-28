@@ -14,7 +14,9 @@ import java.awt.RenderingHints;
  */
 public class MenuItem extends javax.swing.JPanel {
 
-    public MenuItem(ModelMenu data) {
+    private static final long serialVersionUID = 1L;
+
+	public MenuItem(ModelMenu data) {
         initComponents();
         setOpaque(false);
         if (data.getType() == MenuType.MENU) {
@@ -29,7 +31,6 @@ public class MenuItem extends javax.swing.JPanel {
         }
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
