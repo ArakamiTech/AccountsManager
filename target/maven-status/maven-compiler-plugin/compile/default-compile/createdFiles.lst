@@ -10,7 +10,6 @@ com\arakamitech\accountsmanager\logic\model\ListMenu$MenuMouseMotionAdapter.clas
 com\arakamitech\accountsmanager\view\swing\MenuItem.class
 com\arakamitech\accountsmanager\logic\enums\MenuType.class
 com\arakamitech\accountsmanager\view\swing\Table$2.class
-com\arakamitech\accountsmanager\logic\dto\AdminBDConnection.class
 com\arakamitech\accountsmanager\logic\model\SearchText.class
 com\arakamitech\accountsmanager\logic\model\ListMenu.class
 com\arakamitech\accountsmanager\view\components\Menu$1.class
@@ -20,7 +19,6 @@ com\arakamitech\accountsmanager\view\swing\Table$1.class
 com\arakamitech\accountsmanager\view\components\Header.class
 com\arakamitech\accountsmanager\logic\event\EventMenuSelected.class
 com\arakamitech\accountsmanager\view\swing\FormHome.class
-com\arakamitech\accountsmanager\logic\dto\ConnectionDto.class
 com\arakamitech\accountsmanager\logic\enums\GroupType.class
 com\arakamitech\accountsmanager\view\swing\FormHome$1.class
 com\arakamitech\accountsmanager\view\swing\Table.class

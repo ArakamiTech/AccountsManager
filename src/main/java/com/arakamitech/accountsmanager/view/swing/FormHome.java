@@ -2,8 +2,8 @@ package com.arakamitech.accountsmanager.view.swing;
 
 import com.arakamitech.accountsmanager.logic.conection.ManagerConectionBD;
 import com.arakamitech.accountsmanager.logic.dto.ClavesDto;
-import com.arakamitech.accountsmanager.logic.dto.ConnectionDto;
 import java.awt.Color;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -17,7 +17,7 @@ public class FormHome extends javax.swing.JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public FormHome(ManagerConectionBD managerConectionBD, ConnectionDto connectionDto, String group) {
+	public FormHome(String group) throws SQLException {
 		initComponents();
 		jScrollPane1.setVerticalScrollBar(new JScrollBar());
 		jScrollPane1.getVerticalScrollBar().setBackground(Color.WHITE);
@@ -25,7 +25,7 @@ public class FormHome extends javax.swing.JPanel {
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		jScrollPane1.setCorner(javax.swing.ScrollPaneConstants.UPPER_RIGHT_CORNER, panel);
-		addRow(managerConectionBD, connectionDto, group);
+		addRow(group);
 		jLabelTitle.setText("Cuentas Guardadas de " + group);
 	}
 
@@ -99,9 +99,10 @@ public class FormHome extends javax.swing.JPanel {
 
 	private static final Logger LOGGER = Logger.getLogger("FormHome");
 
-	public void addRow(ManagerConectionBD managerConectionBD, ConnectionDto connectionDto, String group) {
+	public void addRow(String group) throws SQLException {
 		LOGGER.info("Inicio metodo addRow llenando la tabla");
-		List<ClavesDto> clavesDtoList = managerConectionBD.getClaves(connectionDto, group);
+                ManagerConectionBD managerConectionBD = ManagerConectionBD.getInstance();
+		List<ClavesDto> clavesDtoList = managerConectionBD.getClaves(group);
 		for (int i = 0; i < clavesDtoList.size(); i++) {
 			table.addRow(new Object[] { clavesDtoList.get(i).getNameApplication(), clavesDtoList.get(i).getUser(),
 					clavesDtoList.get(i).getEmail(), clavesDtoList.get(i).getPassword(),

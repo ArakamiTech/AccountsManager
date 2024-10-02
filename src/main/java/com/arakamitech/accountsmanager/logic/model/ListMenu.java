@@ -8,19 +8,12 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public class ListMenu<E extends Object> extends JList<E> {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
-    private final DefaultListModel model;
+    private final DefaultListModel<ModelMenu> model;
     private int selectedIndex = -1;
     private int overIndex = -1;
     private transient EventMenuSelected event;
@@ -30,8 +23,8 @@ public class ListMenu<E extends Object> extends JList<E> {
     }
 
     public ListMenu() {
-        model = new DefaultListModel<E>();
-        setModel(model);
+        model = new DefaultListModel<>();
+        setModel((ListModel<E>) model);
         addMouseListener(new MenuMouseAdapter());
         addMouseMotionListener(new MenuMouseMotionAdapter());
     }

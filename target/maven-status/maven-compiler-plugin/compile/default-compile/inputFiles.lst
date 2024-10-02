@@ -1,5 +1,4 @@
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\dto\ClavesDto.java
-C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\dto\ConnectionDto.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\enums\GroupType.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\swing\FormCreate.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\swing\Table.java
@@ -11,7 +10,6 @@ C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\acco
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\enums\MenuType.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\swing\MenuItem.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\components\Header.java
-C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\dto\AdminBDConnection.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\model\ListMenu.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\swing\FormHome.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\conection\ManagerConectionBD.java

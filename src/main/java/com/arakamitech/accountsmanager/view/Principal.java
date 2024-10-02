@@ -1,7 +1,6 @@
 package com.arakamitech.accountsmanager.view;
 
 import com.arakamitech.accountsmanager.logic.conection.ManagerConectionBD;
-import com.arakamitech.accountsmanager.logic.dto.ConnectionDto;
 import com.arakamitech.accountsmanager.view.swing.FormCreate;
 import com.arakamitech.accountsmanager.view.swing.FormHome;
 
@@ -18,11 +17,11 @@ import javax.swing.JComponent;
 public class Principal extends javax.swing.JFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         final com.arakamitech.accountsmanager.view.swing.PanelBorder panelBorder1;
@@ -94,8 +93,8 @@ public class Principal extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -108,24 +107,26 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelMain;
     private com.arakamitech.accountsmanager.view.components.Menu menu;
     // End of variables declaration//GEN-END:variables
-    private ConnectionDto connectionDto = null;
-    private ManagerConectionBD managerConectionBD = null;
+    private static final Logger LOGGER = Logger.getLogger("Principal");
 
     public Principal() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
         try {
-            managerConectionBD = new ManagerConectionBD();
-            connectionDto = managerConectionBD.createConectionBD();
-            managerConectionBD.createTable(connectionDto);
-            menu.init(managerConectionBD, connectionDto);
+            ManagerConectionBD managerConectionBD = ManagerConectionBD.getInstance();
+            managerConectionBD.createTable();
+            menu.init();
             menu.initMoving(Principal.this);
             List<String> listMenu = menu.getListItemsMenu();
             menu.addEventMenuSelected(index -> {
                 if (index == 1) {
                     setForm(new FormCreate());
                 } else {
-                    setForm(new FormHome(managerConectionBD, connectionDto, listMenu.get(index - 3)));
+                    try {
+                        setForm(new FormHome(listMenu.get(index - 3)));
+                    } catch (SQLException ex) {
+                        LOGGER.info("Inicio de la funcion createTable");
+                    }
                 }
             });
         } catch (SQLException ex) {

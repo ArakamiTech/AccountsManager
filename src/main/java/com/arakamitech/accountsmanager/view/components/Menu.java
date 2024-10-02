@@ -1,7 +1,6 @@
 package com.arakamitech.accountsmanager.view.components;
 
 import com.arakamitech.accountsmanager.logic.conection.ManagerConectionBD;
-import com.arakamitech.accountsmanager.logic.dto.ConnectionDto;
 import com.arakamitech.accountsmanager.logic.enums.MenuType;
 import com.arakamitech.accountsmanager.logic.event.EventMenuSelected;
 import com.arakamitech.accountsmanager.logic.model.ModelMenu;
@@ -14,8 +13,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -26,7 +28,7 @@ public class Menu extends javax.swing.JPanel {
 
     private static final long serialVersionUID = 1L;
 
-	public Menu() {
+    public Menu() {
         initComponents();
         jLabelTitle.setIcon(new javax.swing.ImageIcon("src/main/java/com/arakamitech/accountsmanager/view/icons/Logo.jpg"));
         jButtonExit.setIcon(new javax.swing.ImageIcon("src/main/java/com/arakamitech/accountsmanager/view/icons/Salir.PNG"));
@@ -113,7 +115,13 @@ public class Menu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonExitActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
-        System.exit(0);
+        try {
+            ManagerConectionBD managerConectionBD = ManagerConectionBD.getInstance();
+            managerConectionBD.closeConnection();
+            System.exit(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonExitActionPerformed
 
     @Override
@@ -142,8 +150,8 @@ public class Menu extends javax.swing.JPanel {
         jPanelMoving.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {
-            	posX = me.getX();
-            	posY = me.getY();
+                posX = me.getX();
+                posY = me.getY();
             }
         });
 
@@ -155,11 +163,12 @@ public class Menu extends javax.swing.JPanel {
         });
     }
 
-    public void init(ManagerConectionBD managerConectionBD, ConnectionDto connectionDto) {
+    public void init() throws SQLException {
+        ManagerConectionBD managerConectionBD = ManagerConectionBD.getInstance();
         listMenu1.addItem(new ModelMenu("", "Gestion", MenuType.TITLE));
         listMenu1.addItem((new ModelMenu("Crear", "Crear", MenuType.MENU)));
         listMenu1.addItem(new ModelMenu("", "Claves", MenuType.TITLE));
-        listMenu = managerConectionBD.getRegisterToMenu(connectionDto);
+        listMenu = managerConectionBD.getRegisterToMenu();
         for (int i = 0; i < listMenu.size(); i++) {
             listMenu1.addItem((new ModelMenu(listMenu.get(i), listMenu.get(i), MenuType.MENU)));
         }
