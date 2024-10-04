@@ -168,7 +168,7 @@ public class Menu extends javax.swing.JPanel {
         listMenu1.addItem(new ModelMenu("", "Gestion", MenuType.TITLE));
         listMenu1.addItem((new ModelMenu("Crear", "Crear", MenuType.MENU)));
         listMenu1.addItem(new ModelMenu("", "Claves", MenuType.TITLE));
-        listMenu = managerConectionBD.getRegisterToMenu();
+        listMenu = managerConectionBD.getRegisterByGroup();
         for (int i = 0; i < listMenu.size(); i++) {
             listMenu1.addItem((new ModelMenu(listMenu.get(i), listMenu.get(i), MenuType.MENU)));
         }

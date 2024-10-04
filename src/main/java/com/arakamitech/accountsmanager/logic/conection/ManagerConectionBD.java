@@ -116,7 +116,7 @@ public class ManagerConectionBD implements Serializable {
         LOGGER.info("Fin de la función deleteRegister");
     }
 
-    public List<String> getRegisterToMenu() {
+    public List<String> getRegisterByGroup() {
         LOGGER.info("Inicio de la función getRegisterToMenu");
         var list = new ArrayList<String>();
         try (var statement = connection.prepareStatement(SELECT_GROUP)) {

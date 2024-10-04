@@ -1,12 +1,8 @@
 
 x
 Hsrc/main/java/com/arakamitech/accountsmanager/view/swing/FormCreate.java,0\c\0c32ae01a29a8f824b9c6b48c836f1e1138779ad
-z
-Jsrc/main/java/com/arakamitech/accountsmanager/logic/dto/ConnectionDto.java,a\c\acb941557fb6c95a080b05ac03f8c564c83d3ed7
 v
 Fsrc/main/java/com/arakamitech/accountsmanager/logic/dto/ClavesDto.java,2\d\2dbda63ce941a30427dd58bd7d3915a9ae108125
-~
-Nsrc/main/java/com/arakamitech/accountsmanager/logic/dto/AdminBDConnection.java,0\b\0b51ae1e350e0356bb7e596c74c1927760787daf
 w
 Gsrc/main/java/com/arakamitech/accountsmanager/logic/enums/MenuType.java,0\2\02aba810a035bbe2b2558633d2e0184cddea4783
 y
