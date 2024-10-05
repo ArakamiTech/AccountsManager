@@ -2,9 +2,10 @@ package com.arakamitech.accountsmanager.view.swing;
 
 import com.arakamitech.accountsmanager.logic.conection.ManagerConectionBD;
 import com.arakamitech.accountsmanager.logic.dto.ClavesDto;
-import java.awt.Color;
+
+import java.awt.*;
+import java.io.Serial;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -15,6 +16,7 @@ import javax.swing.JScrollBar;
  */
 public class FormHome extends javax.swing.JPanel {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public FormHome(String group) throws SQLException {
@@ -29,7 +31,6 @@ public class FormHome extends javax.swing.JPanel {
 		jLabelTitle.setText("Cuentas Guardadas de " + group);
 	}
 
-	// <editor-fold defaultstate="collapsed" desc="Generated
 	// Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 		final com.arakamitech.accountsmanager.view.swing.PanelBorder panelBorder1;
@@ -43,15 +44,16 @@ public class FormHome extends javax.swing.JPanel {
 		panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
 
 		jLabelTitle.setBackground(new java.awt.Color(127, 127, 127));
-		jLabelTitle.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+		jLabelTitle.setFont(new java.awt.Font("SansSerif", Font.PLAIN, 18)); // NOI18N
 
 		jScrollPane1.setBorder(null);
 
 		table.setModel(new javax.swing.table.DefaultTableModel(new Object[][] {
 
 		}, new String[] { "Aplicación", "Usuario", "Correo", "Contraseña", "Descripción" }) {
+			@Serial
 			private static final long serialVersionUID = 1L;
-			boolean[] canEdit = new boolean[] { false, false, false, false, false };
+			final boolean[] canEdit = new boolean[] { false, false, false, false, false };
 
 			@Override
 			public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -102,12 +104,12 @@ public class FormHome extends javax.swing.JPanel {
 	public void addRow(String group) throws SQLException {
 		LOGGER.info("Inicio metodo addRow llenando la tabla");
                 ManagerConectionBD managerConectionBD = ManagerConectionBD.getInstance();
-		List<ClavesDto> clavesDtoList = managerConectionBD.getClaves(group);
-		for (int i = 0; i < clavesDtoList.size(); i++) {
-			table.addRow(new Object[] { clavesDtoList.get(i).getNameApplication(), clavesDtoList.get(i).getUser(),
-					clavesDtoList.get(i).getEmail(), clavesDtoList.get(i).getPassword(),
-					clavesDtoList.get(i).getDescription() });
-		}
+		var clavesDtoList = managerConectionBD.getClaves(group);
+        for (ClavesDto clavesDto : clavesDtoList) {
+            table.addRow(new Object[]{clavesDto.getNameApplication(), clavesDto.getUser(),
+                    clavesDto.getEmail(), clavesDto.getPassword(),
+                    clavesDto.getDescription()});
+        }
 		LOGGER.info("Inicio metodo addRow llenando la tabla");
 	}
 

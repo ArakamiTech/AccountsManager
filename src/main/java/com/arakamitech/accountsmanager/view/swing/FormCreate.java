@@ -13,7 +13,6 @@ import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.Base64;
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +26,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -49,15 +49,15 @@ public class FormCreate extends javax.swing.JPanel {
             jLabelnumUpperCase.setText(String.valueOf(jSliderNumUpperCase.getValue()));
             ManagerConectionBD managerConectionBD = ManagerConectionBD.getInstance();
             var listGroup = managerConectionBD.getRegisterByGroup();
-            for (String group : listGroup) {
+            for (var group : listGroup) {
                 jComboBoxGroup.addItem(group);
             }
         } catch (SQLException ex) {
             Logger.getLogger(FormCreate.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error obteniendo datos por grupo", ALERT, 0);
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         javax.swing.JCheckBox jCheckBoxSpecialChars;
@@ -363,82 +363,81 @@ public class FormCreate extends javax.swing.JPanel {
 
     private void jButtonCreateActionPerformed() {
         try {
-            // GEN-FIRST:event_jButtonCreateActionPerformed
             ManagerConectionBD managerConectionBD = ManagerConectionBD.getInstance();
-            ClavesDto clavesDto = new ClavesDto();
-            clavesDto.setNameApplication(jTextFieldApplication.getText());
-            clavesDto.setUser(jTextFieldUser.getText());
-            clavesDto.setEmail(jTextFieldEmail.getText());
-            clavesDto.setPassword(passwordB64);
-            clavesDto.setDescription(jTextFieldDescription.getText());
-            clavesDto.setGroup(Objects.requireNonNull(jComboBoxGroup.getSelectedItem()).toString());
-            clavesDto.setKey(keyB64);
-            clavesDto.setIv(iVB64);
-
+            ClavesDto clavesDto = ClavesDto.builder()
+                    .nameApplication(jTextFieldApplication.getText())
+                    .user(jTextFieldUser.getText())
+                    .email(jTextFieldEmail.getText())
+                    .password(passwordB64)
+                    .description(jTextFieldDescription.getText())
+                    .group(Objects.requireNonNull(jComboBoxGroup.getSelectedItem()).toString())
+                    .key(keyB64)
+                    .iv(iVB64)
+                    .build();
             managerConectionBD.createRegister(clavesDto);
-        } // GEN-LAST:event_jButtonCreateActionPerformed
+        }
         catch (SQLException ex) {
             Logger.getLogger(FormCreate.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error creando el registro", ALERT, 0);
         }
     }
 
-    private void jCheckBoxConfigurationsMouseClicked() {// GEN-FIRST:event_jCheckBoxConfigurationsMouseClicked
+    private void jCheckBoxConfigurationsMouseClicked() {
         isVisible = !isVisible;
         panelBorderConfigrations.setVisible(isVisible);
-    }// GEN-LAST:event_jCheckBoxConfigurationsMouseClicked
+    }
 
-    private void jCheckBoxSpecialCharsActionPerformed() {// GEN-FIRST:event_jCheckBoxSpecialCharsActionPerformed
+    private void jCheckBoxSpecialCharsActionPerformed() {
         specialChars = !specialChars;
-    }// GEN-LAST:event_jCheckBoxSpecialCharsActionPerformed
+    }
 
-    private void jSliderMinLengthStateChanged() {// GEN-FIRST:event_jSliderMinLengthStateChanged
+    private void jSliderMinLengthStateChanged() {
         jSliderMinLength.addChangeListener(e -> jLabelMinLength.setText(String.valueOf(jSliderMinLength.getValue())));
-    }// GEN-LAST:event_jSliderMinLengthStateChanged
+    }
 
-    private void jSliderMaxLengthStateChanged() {// GEN-FIRST:event_jSliderMaxLengthStateChanged
+    private void jSliderMaxLengthStateChanged() {
         jSliderMaxLength.addChangeListener(e -> jLabelMaxLength.setText(String.valueOf(jSliderMaxLength.getValue())));
-    }// GEN-LAST:event_jSliderMaxLengthStateChanged
+    }
 
-    private void jSliderNumUpperCaseStateChanged() {// GEN-FIRST:event_jSliderNumUpperCaseStateChanged
+    private void jSliderNumUpperCaseStateChanged() {
         jSliderNumUpperCase.addChangeListener(e -> jLabelnumUpperCase.setText(String.valueOf(jSliderNumUpperCase.getValue())));
-    }// GEN-LAST:event_jSliderNumUpperCaseStateChanged
+    }
 
     private void jButtonGenerateActionPerformed() throws InvalidAlgorithmParameterException, BadPaddingException, InvalidKeyException {// GEN-FIRST:event_jButtonGenerateActionPerformed
         if (Integer.parseInt(jLabelMinLength.getText()) > Integer.parseInt(jLabelMaxLength.getText())) {
-            throw new IllegalArgumentException("La longitud mínima no puede ser mayor que la longitud máxima.");
+            JOptionPane.showMessageDialog(null, "La longitud mínima no puede ser mayor que la longitud máxima.", INFORMATION, 0);
         }
         if (Integer.parseInt(jLabelnumUpperCase.getText()) > Integer.parseInt(jLabelMinLength.getText())) {
-            throw new IllegalArgumentException("El número de mayúsculas no puede ser mayor que la longitud mínima.");
+            JOptionPane.showMessageDialog(null, "El número de mayúsculas no puede ser mayor que la longitud mínima.", INFORMATION, 0);
         }
 
-        SecureRandom random = new SecureRandom();
-        StringBuilder charPool = new StringBuilder(LOWERCASE + DIGITS);
+        var random = new SecureRandom();
+        var charPool = new StringBuilder(LOWERCASE + DIGITS);
 
         if (specialChars) {
             charPool.append(SPECIAL_CHARACTERS);
         }
 
-        String filteredPool = charPool.toString().chars()
+        var filteredPool = charPool.toString().chars()
                 .filter(c -> jTextFieldExcludeSpecialChars.getText().indexOf(c) == -1)
                 .mapToObj(c -> String.valueOf((char) c)).collect(Collectors.joining());
 
-        StringBuilder password = new StringBuilder();
+        var password = new StringBuilder();
         IntStream.range(0, Integer.parseInt(jLabelnumUpperCase.getText()))
                 .forEach(i -> password.append(UPPERCASE.charAt(random.nextInt(UPPERCASE.length()))));
 
-        int remainingLength = Integer.parseInt(jLabelMinLength.getText()) - Integer.parseInt(jLabelMaxLength.getText());
+        var remainingLength = Integer.parseInt(jLabelMinLength.getText()) - Integer.parseInt(jLabelMaxLength.getText());
         if (filteredPool.isEmpty()) {
-            throw new IllegalStateException(
-                    "El conjunto de caracteres disponible está vacío. Ajuste las configuraciones.");
+            JOptionPane.showMessageDialog(null, "El conjunto de caracteres disponible está vacío. Ajuste las configuraciones.", INFORMATION, 0);
         }
 
         IntStream.range(0, remainingLength)
                 .forEach(i -> password.append(filteredPool.charAt(random.nextInt(filteredPool.length()))));
 
-        List<Character> passwordList = password.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
+        var passwordList = password.chars().mapToObj(c -> (char) c).collect(Collectors.toList());
         Collections.shuffle(passwordList, random);
 
-        int finalLength = Integer.parseInt(jLabelMinLength.getText()) + random
+        var finalLength = Integer.parseInt(jLabelMinLength.getText()) + random
                 .nextInt(Integer.parseInt(jLabelMaxLength.getText()) - Integer.parseInt(jLabelMinLength.getText()) + 1);
 
         IntStream.range(0, finalLength).forEach(i -> {
@@ -448,17 +447,18 @@ public class FormCreate extends javax.swing.JPanel {
                 finalPassword.append(filteredPool.charAt(random.nextInt(filteredPool.length())));
             }
         });
-        String maskedPassword = "*".repeat(15);
+        var maskedPassword = "*".repeat(15);
         jPasswordField.setText(maskedPassword);
-        SecretKey secretKey = generateKey(128);
+        var secretKey = generateKey(128);
         if (secretKey == null) {
-            throw new IllegalStateException("Failed to generate secret key.");
+            JOptionPane.showMessageDialog(null, "Ha fallado la generacion de secret Key", ALERT, 0);
+            System.exit(0);
         }
-        byte[] keyBytes = secretKey.getEncoded();
-        byte[] iv = new byte[12];
-        SecureRandom secureRandom = new SecureRandom();
+        var keyBytes = secretKey.getEncoded();
+        var iv = new byte[12];
+        var secureRandom = new SecureRandom();
         secureRandom.nextBytes(iv);
-        byte[] encryptedPassword = encryptPassword(finalPassword.toString().getBytes(StandardCharsets.UTF_8), keyBytes, iv);
+        var encryptedPassword = encryptPassword(finalPassword.toString().getBytes(StandardCharsets.UTF_8), keyBytes, iv);
         passwordB64 = Base64.getEncoder().encodeToString(encryptedPassword);
         keyB64 = Base64.getEncoder().encodeToString(keyBytes);
         iVB64 = Base64.getEncoder().encodeToString(iv);
@@ -466,24 +466,26 @@ public class FormCreate extends javax.swing.JPanel {
 
     public static SecretKey generateKey(int n) {
         try {
-            KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+            var keyGen = KeyGenerator.getInstance("AES");
             keyGen.init(n);
             return keyGen.generateKey();
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(FormCreate.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error generando la Clave secreta", ALERT, 0);
+            System.exit(0);
         }
         return null;
     }
 
     public static byte[] encryptPassword(byte[] password, byte[] keyBytes, byte[] iv) throws InvalidKeyException, InvalidAlgorithmParameterException, BadPaddingException {
         try {
-            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
-            SecretKey secretKey = new SecretKeySpec(keyBytes, "AES");
-            GCMParameterSpec gcmSpec = new GCMParameterSpec(128, iv);
+            var cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            var secretKey = new SecretKeySpec(keyBytes, "AES");
+            var gcmSpec = new GCMParameterSpec(128, iv);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, gcmSpec);
             return cipher.doFinal(password);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException ex) {
-            Logger.getLogger(FormCreate.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error encriptando la contraseña", ALERT, 0);
+            System.exit(0);
         }
         return new byte[0];
     }
@@ -513,6 +515,8 @@ public class FormCreate extends javax.swing.JPanel {
     private static final String DIGITS = "0123456789";
     private static final String SPECIAL_CHARACTERS = "!@#$%^&*()-_=+[]{}|;:',.<>?/";
     private static final String SANSSERIF = "SansSerif";
+    private static final String ALERT = "ALERT";
+    private static final String INFORMATION = "Información";
     private final StringBuilder finalPassword = new StringBuilder();
     private String passwordB64;
     private String keyB64;

@@ -3,6 +3,7 @@ package com.arakamitech.accountsmanager.view.swing;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.io.Serial;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
@@ -15,13 +16,14 @@ public class TableHeader extends JLabel {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	@Serial
+    private static final long serialVersionUID = 1L;
 
 	public TableHeader(String text) {
         super(text);
         setOpaque(false);
         setBackground(Color.WHITE);
-        setFont(new Font("sansserif", 1, 12));
+        setFont(new Font("sansserif", Font.BOLD, 12));
         setForeground(new Color(102, 102, 102));
         setBorder(new EmptyBorder(10, 50, 10, 5));
     }

@@ -1,5 +1,5 @@
 
-e
-java:S2095 "HUse try-with-resources or close this "Connection" in a "finally" clause.(¬¦à™8ûÝ¶Ò£2
-F
-java:S2115 ")Add password protection to this database.(¬¦à™8€Þ¶Ò£2
+»
+java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(ÙžÕÝüÿÿÿÿ8»úÄ±¥2
+K
+java:S2115")Add password protection to this database.(˜¸ðéýÿÿÿÿ8ÅúÄ±¥2

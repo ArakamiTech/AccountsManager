@@ -8,10 +8,12 @@ import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.Serial;
 import javax.swing.*;
 
-public class ListMenu<E extends Object> extends JList<E> {
+public class ListMenu<E> extends JList<E> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private final DefaultListModel<ModelMenu> model;
     private int selectedIndex = -1;
@@ -45,7 +47,7 @@ public class ListMenu<E extends Object> extends JList<E> {
         }
 
         private void handleMousePressed(MouseEvent me) {
-            int index = locationToIndex(me.getPoint());
+            var index = locationToIndex(me.getPoint());
             Object o = model.getElementAt(index);
             if (o instanceof ModelMenu menu) {
                 if (menu.getType() == MenuType.MENU) {
@@ -65,7 +67,7 @@ public class ListMenu<E extends Object> extends JList<E> {
 
         @Override
         public void mouseMoved(MouseEvent me) {
-            int index = locationToIndex(me.getPoint());
+            var index = locationToIndex(me.getPoint());
             if (index != overIndex) {
                 handleMouseMoved(index);
             }
@@ -89,9 +91,9 @@ public class ListMenu<E extends Object> extends JList<E> {
                 if (o instanceof ModelMenu o1) {
                     data = o1;
                 } else {
-                    data = new ModelMenu("", o + "", MenuType.EMPTY);
+                    data = ModelMenu.builder().icon("").name(o + "").type(MenuType.EMPTY).build();
                 }
-                MenuItem item = new MenuItem(data);
+                var item = new MenuItem(data);
                 item.setSelected(selectedIndex == index);
                 item.setOver(overIndex == index);
                 return item;

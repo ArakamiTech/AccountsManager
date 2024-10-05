@@ -116,7 +116,7 @@ public class Menu extends javax.swing.JPanel {
 
     private void jButtonExitActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
         try {
-            ManagerConectionBD managerConectionBD = ManagerConectionBD.getInstance();
+            var managerConectionBD = ManagerConectionBD.getInstance();
             managerConectionBD.closeConnection();
             System.exit(0);
         } catch (SQLException ex) {
@@ -126,7 +126,7 @@ public class Menu extends javax.swing.JPanel {
 
     @Override
     protected void paintChildren(Graphics grphcs) {
-        Graphics2D g2 = (Graphics2D) grphcs;
+        var g2 = (Graphics2D) grphcs;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         GradientPaint g = new GradientPaint(0, 0, Color.decode("#1CB5E0"), 0, getHeight(), Color.decode(BLUE_COLOR));
         g2.setPaint(g);
@@ -164,13 +164,13 @@ public class Menu extends javax.swing.JPanel {
     }
 
     public void init() throws SQLException {
-        ManagerConectionBD managerConectionBD = ManagerConectionBD.getInstance();
-        listMenu1.addItem(new ModelMenu("", "Gestion", MenuType.TITLE));
-        listMenu1.addItem((new ModelMenu("Crear", "Crear", MenuType.MENU)));
-        listMenu1.addItem(new ModelMenu("", "Claves", MenuType.TITLE));
+        var managerConectionBD = ManagerConectionBD.getInstance();
+        listMenu1.addItem(ModelMenu.builder().icon("").name("Gestion").type(MenuType.TITLE).build());
+        listMenu1.addItem(ModelMenu.builder().icon("Crear").name("Crear").type(MenuType.MENU).build());
+        listMenu1.addItem(ModelMenu.builder().icon("").name("Claves").type(MenuType.TITLE).build());
         listMenu = managerConectionBD.getRegisterByGroup();
-        for (int i = 0; i < listMenu.size(); i++) {
-            listMenu1.addItem((new ModelMenu(listMenu.get(i), listMenu.get(i), MenuType.MENU)));
+        for (String item : listMenu) {
+            listMenu1.addItem(ModelMenu.builder().icon(item).name(item).type(MenuType.MENU).build());
         }
     }
 

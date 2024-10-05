@@ -3,6 +3,7 @@ package com.arakamitech.accountsmanager.view.swing;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.io.Serial;
 
 /**
  *
@@ -10,6 +11,7 @@ import java.awt.RenderingHints;
  */
 public class PanelBorder extends javax.swing.JPanel {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
 	public PanelBorder() {
@@ -34,13 +36,11 @@ public class PanelBorder extends javax.swing.JPanel {
 
     @Override
     protected void paintComponent(Graphics graphics){
-        Graphics2D g2 = (Graphics2D) graphics;
+        var g2 = (Graphics2D) graphics;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setColor(getBackground());
         g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
         super.paintComponent(graphics);
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
 }
