@@ -33,7 +33,7 @@ public class ManagerConectionBD implements Serializable {
             LOGGER.info("Conexion creada exitosamente");
         } catch (SQLException e) {
             LOGGER.severe("Error en la función ManagerConectionBD");
-            JOptionPane.showConfirmDialog(null, "No se pudo conectar a la base de datos", ALERT, 0);
+            JOptionPane.showMessageDialog(null, "No se pudo conectar a la base de datos", ALERT, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -57,7 +57,7 @@ public class ManagerConectionBD implements Serializable {
             }
         } catch (SQLException e) {
             LOGGER.severe("Error cerrando la conexión: " + e.getMessage());
-            JOptionPane.showConfirmDialog(null, "No se pudo cerrar la conexion a la base de datos", ALERT, 0);
+            JOptionPane.showMessageDialog(null, "No se pudo cerrar la conexion a la base de datos", ALERT, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -68,7 +68,7 @@ public class ManagerConectionBD implements Serializable {
             LOGGER.info("Tabla creada correctamente");
         } catch (SQLException e) {
             LOGGER.severe("Error creando la tabla: " + e.getMessage());
-            JOptionPane.showConfirmDialog(null, "Error creando la tabla", ALERT, 0);
+            JOptionPane.showMessageDialog(null, "Error creando la tabla", ALERT, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -86,9 +86,10 @@ public class ManagerConectionBD implements Serializable {
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.severe("Error en createRegister: " + e.getMessage());
-            JOptionPane.showConfirmDialog(null, "Error creando el registro", ALERT, 0);
+            JOptionPane.showMessageDialog(null, "Error creando el registro", ALERT, JOptionPane.ERROR_MESSAGE);
         }
         LOGGER.info("Fin de la función createRegister");
+        JOptionPane.showMessageDialog(null, "Registro creado con exito", ALERT, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void editRegister(ClavesDto clavesDto) {
@@ -106,9 +107,10 @@ public class ManagerConectionBD implements Serializable {
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.severe("Error en editRegister: " + e.getMessage());
-            JOptionPane.showConfirmDialog(null, "Error editando el registro", ALERT, 0);
+            JOptionPane.showMessageDialog(null, "Error editando el registro", ALERT, JOptionPane.ERROR_MESSAGE);
         }
         LOGGER.info("Fin de la función editRegister");
+        JOptionPane.showMessageDialog(null, "Registro editado con exito", ALERT, JOptionPane.ERROR_MESSAGE);
     }
 
     public void deleteRegister(int idClaves) {
@@ -118,9 +120,10 @@ public class ManagerConectionBD implements Serializable {
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.severe("Error en deleteRegister: " + e.getMessage());
-            JOptionPane.showConfirmDialog(null, "Error eliminando el registro", ALERT, 0);
+            JOptionPane.showMessageDialog(null, "Error eliminando el registro", ALERT, JOptionPane.ERROR_MESSAGE);
         }
         LOGGER.info("Fin de la función deleteRegister");
+        JOptionPane.showMessageDialog(null, "Registro eliminado con exito", ALERT, JOptionPane.ERROR_MESSAGE);
     }
 
     public List<String> getRegisterByGroup() {
@@ -133,7 +136,7 @@ public class ManagerConectionBD implements Serializable {
             }
         } catch (SQLException e) {
             LOGGER.severe("Error en getRegisterToMenu: " + e.getMessage());
-            JOptionPane.showConfirmDialog(null, "Error obteniendo datos por grupo", ALERT, 0);
+            JOptionPane.showMessageDialog(null, "Error obteniendo datos por grupo", ALERT, JOptionPane.ERROR_MESSAGE);
         }
         LOGGER.info("Fin de la función getRegisterToMenu");
         return list;
@@ -160,7 +163,7 @@ public class ManagerConectionBD implements Serializable {
             }
         } catch (SQLException e) {
             LOGGER.severe("Error en getClaves: " + e.getMessage());
-            JOptionPane.showConfirmDialog(null, "Error obteniendo los registros", ALERT, 0);
+            JOptionPane.showMessageDialog(null, "Error obteniendo los registros", ALERT, JOptionPane.ERROR_MESSAGE);
         }
         LOGGER.info("Fin de la función getClaves");
         return clavesDtoList;
@@ -171,12 +174,12 @@ public class ManagerConectionBD implements Serializable {
                "  `id_claves` INT NOT NULL AUTO_INCREMENT," +
                "  `name_application` VARCHAR(45) NOT NULL," +
                "  `user` VARCHAR(45) NULL," +
-               "  `email` VARCHAR(45) NULL," +
-               "  `password` VARCHAR(100) NOT NULL," +
-               "  `description` VARCHAR(45) NULL," +
+               "  `email` VARCHAR(100) NULL," +
+               "  `password` VARCHAR(250) NOT NULL," +
+               "  `description` VARCHAR(100) NULL," +
                "  `group` VARCHAR(45) NOT NULL," +
-               "  `key` VARCHAR(100) NOT NULL," +
-               "  `iv` VARCHAR(100) NOT NULL," +
+               "  `key` VARCHAR(100) NULL," +
+               "  `iv` VARCHAR(100) NULL," +
                "  PRIMARY KEY (`id_claves`)," +
                "  UNIQUE (`id_claves`))";
     }

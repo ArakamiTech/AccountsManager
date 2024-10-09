@@ -5,6 +5,7 @@ import com.arakamitech.accountsmanager.view.swing.FormCreate;
 import com.arakamitech.accountsmanager.view.swing.FormHome;
 
 import java.awt.Color;
+import java.io.Serial;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,6 +20,7 @@ public class Principal extends javax.swing.JFrame {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 1L;
 
 
@@ -94,7 +96,7 @@ public class Principal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-                | javax.swing.UnsupportedLookAndFeelException ex) {
+                 | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -112,10 +114,15 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
+        menu.init();
+        paintMenu();
+    }
+
+    public void paintMenu() {
         try {
             ManagerConectionBD managerConectionBD = ManagerConectionBD.getInstance();
             managerConectionBD.createTable();
-            menu.init();
+            menu.initGroups();
             menu.initMoving(Principal.this);
             List<String> listMenu = menu.getListItemsMenu();
             menu.addEventMenuSelected(index -> {

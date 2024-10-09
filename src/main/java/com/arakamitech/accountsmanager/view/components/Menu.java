@@ -163,14 +163,19 @@ public class Menu extends javax.swing.JPanel {
         });
     }
 
-    public void init() throws SQLException {
-        var managerConectionBD = ManagerConectionBD.getInstance();
+    public void init() {
         listMenu1.addItem(ModelMenu.builder().icon("").name("Gestion").type(MenuType.TITLE).build());
         listMenu1.addItem(ModelMenu.builder().icon("Crear").name("Crear").type(MenuType.MENU).build());
-        listMenu1.addItem(ModelMenu.builder().icon("").name("Claves").type(MenuType.TITLE).build());
+    }
+
+    public void initGroups() throws SQLException {
+        var managerConectionBD = ManagerConectionBD.getInstance();
         listMenu = managerConectionBD.getRegisterByGroup();
-        for (String item : listMenu) {
-            listMenu1.addItem(ModelMenu.builder().icon(item).name(item).type(MenuType.MENU).build());
+        if(!listMenu.isEmpty()) {
+            listMenu1.addItem(ModelMenu.builder().icon("").name("Claves").type(MenuType.TITLE).build());
+            for (String item : listMenu) {
+                listMenu1.addItem(ModelMenu.builder().icon(item).name(item).type(MenuType.MENU).build());
+            }
         }
     }
 

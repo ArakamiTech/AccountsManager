@@ -2,8 +2,10 @@ package com.arakamitech.accountsmanager.view.swing;
 
 import com.arakamitech.accountsmanager.logic.conection.ManagerConectionBD;
 import com.arakamitech.accountsmanager.logic.dto.ClavesDto;
+import com.arakamitech.accountsmanager.view.Principal;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.Serial;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
@@ -29,13 +31,13 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JOptionPane;
 
 /**
- *
  * @author cristhian
  */
 public class FormCreate extends javax.swing.JPanel {
 
     @Serial
     private static final long serialVersionUID = 1L;
+    private Principal principal;
 
     public FormCreate() {
         try {
@@ -54,32 +56,30 @@ public class FormCreate extends javax.swing.JPanel {
             }
         } catch (SQLException ex) {
             Logger.getLogger(FormCreate.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Error obteniendo datos por grupo", ALERT, 0);
+            JOptionPane.showMessageDialog(null, "Error obteniendo datos por grupo", ALERT, JOptionPane.ERROR_MESSAGE);
         }
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        com.arakamitech.accountsmanager.view.swing.PanelBorder panelBorder1;
+        javax.swing.JLabel jLabel8;
+        javax.swing.JLabel jLabel9;
+        javax.swing.JLabel jLabel7;
+        javax.swing.JLabel jLabel6;
+        javax.swing.JLabel jLabel5;
+        javax.swing.JLabel jLabel4;
+        javax.swing.JLabel jLabel11;
+        javax.swing.JLabel jLabel10;
+        javax.swing.JLabel jLabel1;
         javax.swing.JCheckBox jCheckBoxSpecialChars;
-        javax.swing.JCheckBox jCheckBoxConfigurations;
         javax.swing.JButton jButtonGenerate;
         javax.swing.JButton jButtonCreate;
-        com.arakamitech.accountsmanager.view.swing.PanelBorder panelBorder1;
-        final javax.swing.JLabel jLabel1;
-        final javax.swing.JLabel jLabel10;
-        final javax.swing.JLabel jLabel11;
-        final javax.swing.JLabel jLabel2;
-        final javax.swing.JLabel jLabel3;
-        final javax.swing.JLabel jLabel4;
-        final javax.swing.JLabel jLabel5;
-        final javax.swing.JLabel jLabel6;
-        final javax.swing.JLabel jLabel7;
-        final javax.swing.JLabel jLabel8;
-        final javax.swing.JLabel jLabel9;
         panelBorder1 = new com.arakamitech.accountsmanager.view.swing.PanelBorder();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
+        jLabelGroupName = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldUser = new javax.swing.JTextField();
@@ -88,7 +88,7 @@ public class FormCreate extends javax.swing.JPanel {
         jPasswordField = new javax.swing.JPasswordField();
         jComboBoxGroup = new javax.swing.JComboBox<>();
         jLabelTitle = new javax.swing.JLabel();
-        jCheckBoxConfigurations = new javax.swing.JCheckBox();
+        javax.swing.JCheckBox jCheckBoxConfigurations = new javax.swing.JCheckBox();
         jButtonCreate = new javax.swing.JButton();
         panelBorderConfigrations = new com.arakamitech.accountsmanager.view.swing.PanelBorder();
         jLabel6 = new javax.swing.JLabel();
@@ -107,17 +107,22 @@ public class FormCreate extends javax.swing.JPanel {
         jButtonGenerate = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jTextFieldDescription = new javax.swing.JTextField();
+        jTextFieldGroupName = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(242, 242, 242));
 
         panelBorder1.setBackground(new java.awt.Color(255, 255, 255));
         panelBorder1.setForeground(new java.awt.Color(255, 255, 255));
-
+        jLabelGroupName.setEnabled(false);
+        jTextFieldGroupName.setEnabled(false);
         jLabel1.setFont(new java.awt.Font(SANSSERIF, Font.BOLD, 14)); // NOI18N
         jLabel1.setText("Grupo");
 
         jLabel2.setFont(new java.awt.Font(SANSSERIF, Font.BOLD, 14)); // NOI18N
         jLabel2.setText("Aplicación");
+
+        jLabelGroupName.setFont(new java.awt.Font(SANSSERIF, Font.BOLD, 14)); // NOI18N
+        jLabelGroupName.setText("Nombre Grupo");
 
         jLabel3.setFont(new java.awt.Font(SANSSERIF, Font.BOLD, 14)); // NOI18N
         jLabel3.setText("Usuario");
@@ -145,7 +150,6 @@ public class FormCreate extends javax.swing.JPanel {
         jCheckBoxConfigurations.setFont(new java.awt.Font(SANSSERIF, Font.BOLD, 14)); // NOI18N
         jCheckBoxConfigurations.setText("Configuración");
         jCheckBoxConfigurations.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBoxConfigurationsMouseClicked();
             }
@@ -195,75 +199,80 @@ public class FormCreate extends javax.swing.JPanel {
         jButtonGenerate.addActionListener(evt -> {
             try {
                 jButtonGenerateActionPerformed();
-            } catch (InvalidAlgorithmParameterException | BadPaddingException |
-                     InvalidKeyException e) {
-                Logger.getLogger(FormCreate.class.getName()).log(Level.SEVERE, null, e);
+            } catch (InvalidAlgorithmParameterException | BadPaddingException | InvalidKeyException e) {
+                throw new RuntimeException(e);
             }
         });
-
+        jPasswordField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPasswordFieldMouseClicked(evt);
+            }
+        });
+        jComboBoxGroup.addItem("Otro");
+        jComboBoxGroup.addActionListener(evt -> jComboBoxGroupActionPerformed());
         javax.swing.GroupLayout panelBorderConfigrationsLayout = new javax.swing.GroupLayout(panelBorderConfigrations);
         panelBorderConfigrations.setLayout(panelBorderConfigrationsLayout);
         panelBorderConfigrationsLayout.setHorizontalGroup(
-            panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorderConfigrationsLayout.createSequentialGroup()
-                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelBorderConfigrationsLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(20, 20, 20)
-                        .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelBorderConfigrationsLayout.createSequentialGroup()
-                                .addComponent(jCheckBoxSpecialChars)
-                                .addGap(20, 20, 20)
-                                .addComponent(jTextFieldExcludeSpecialChars, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel10))
-                            .addGroup(panelBorderConfigrationsLayout.createSequentialGroup()
-                                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jSliderNumUpperCase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jSliderMinLength, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jSliderMaxLength, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(20, 20, 20)
+                panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelBorderConfigrationsLayout.createSequentialGroup()
                                 .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelMinLength, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabelMaxLength, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabelnumUpperCase, javax.swing.GroupLayout.Alignment.TRAILING)))))
-                    .addGroup(panelBorderConfigrationsLayout.createSequentialGroup()
-                        .addGap(291, 291, 291)
-                        .addComponent(jButtonGenerate)))
-                .addGap(20, 20, 20))
+                                        .addGroup(panelBorderConfigrationsLayout.createSequentialGroup()
+                                                .addGap(20, 20, 20)
+                                                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel9)
+                                                        .addComponent(jLabel6)
+                                                        .addComponent(jLabel7)
+                                                        .addComponent(jLabel8))
+                                                .addGap(20, 20, 20)
+                                                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(panelBorderConfigrationsLayout.createSequentialGroup()
+                                                                .addComponent(jCheckBoxSpecialChars)
+                                                                .addGap(20, 20, 20)
+                                                                .addComponent(jTextFieldExcludeSpecialChars, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                                                                .addGap(20, 20, 20)
+                                                                .addComponent(jLabel10))
+                                                        .addGroup(panelBorderConfigrationsLayout.createSequentialGroup()
+                                                                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                        .addComponent(jSliderNumUpperCase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                        .addComponent(jSliderMinLength, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                        .addComponent(jSliderMaxLength, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                                .addGap(20, 20, 20)
+                                                                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                        .addComponent(jLabelMinLength, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                        .addComponent(jLabelMaxLength, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                                        .addComponent(jLabelnumUpperCase, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                                        .addGroup(panelBorderConfigrationsLayout.createSequentialGroup()
+                                                .addGap(291, 291, 291)
+                                                .addComponent(jButtonGenerate)))
+                                .addGap(20, 20, 20))
         );
         panelBorderConfigrationsLayout.setVerticalGroup(
-            panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorderConfigrationsLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jSliderMinLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelMinLength))
-                .addGap(20, 20, 20)
-                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jSliderMaxLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelMaxLength))
-                .addGap(20, 20, 20)
-                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jSliderNumUpperCase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelnumUpperCase))
-                .addGap(20, 20, 20)
-                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jCheckBoxSpecialChars)
-                    .addComponent(jTextFieldExcludeSpecialChars, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(20, 20, 20)
-                .addComponent(jButtonGenerate)
-                .addContainerGap(20, Short.MAX_VALUE))
+                panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelBorderConfigrationsLayout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jSliderMinLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabelMinLength))
+                                .addGap(20, 20, 20)
+                                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jSliderMaxLength, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabelMaxLength))
+                                .addGap(20, 20, 20)
+                                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel8)
+                                        .addComponent(jSliderNumUpperCase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabelnumUpperCase))
+                                .addGap(20, 20, 20)
+                                .addGroup(panelBorderConfigrationsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jCheckBoxSpecialChars)
+                                        .addComponent(jTextFieldExcludeSpecialChars, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel10))
+                                .addGap(20, 20, 20)
+                                .addComponent(jButtonGenerate)
+                                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jLabel11.setFont(new java.awt.Font(SANSSERIF, Font.BOLD, 14)); // NOI18N
@@ -271,114 +280,138 @@ public class FormCreate extends javax.swing.JPanel {
 
         jTextFieldDescription.setFont(new java.awt.Font(SANSSERIF, Font.BOLD, 14)); // NOI18N
 
+        jTextFieldGroupName.setFont(new java.awt.Font(SANSSERIF, Font.BOLD, 14)); // NOI18N
+
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
         panelBorder1.setLayout(panelBorder1Layout);
         panelBorder1Layout.setHorizontalGroup(
-            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addGap(321, 321, 321)
-                .addComponent(jButtonCreate)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelBorderConfigrations, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelBorder1Layout.createSequentialGroup()
-                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabelTitle)
-                            .addComponent(jLabel11))
-                        .addGap(90, 90, 90)
-                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldUser)
-                            .addComponent(jTextFieldApplication)
-                            .addComponent(jComboBoxGroup, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextFieldEmail)
-                            .addGroup(panelBorder1Layout.createSequentialGroup()
-                                .addComponent(jPasswordField)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBoxConfigurations))
-                            .addComponent(jTextFieldDescription))))
-                .addGap(28, 28, 28))
+                panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addGap(321, 321, 321)
+                                .addComponent(jButtonCreate)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(panelBorderConfigrations, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(panelBorder1Layout.createSequentialGroup()
+                                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel3)
+                                                        .addComponent(jLabel2)
+                                                        .addComponent(jLabel4)
+                                                        .addComponent(jLabel5)
+                                                        .addComponent(jLabel1)
+                                                        .addComponent(jLabelTitle)
+                                                        .addComponent(jLabel11)
+                                                        .addComponent(jLabelGroupName))
+                                                .addGap(90, 90, 90)
+                                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jTextFieldUser)
+                                                        .addComponent(jTextFieldApplication)
+                                                        .addComponent(jComboBoxGroup, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jTextFieldEmail)
+                                                        .addGroup(panelBorder1Layout.createSequentialGroup()
+                                                                .addComponent(jPasswordField)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                                .addComponent(jCheckBoxConfigurations))
+                                                        .addComponent(jTextFieldDescription)
+                                                        .addComponent(jTextFieldGroupName))))
+                                .addGap(28, 28, 28))
         );
         panelBorder1Layout.setVerticalGroup(
-            panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBorder1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelTitle)
-                .addGap(20, 20, 20)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBoxGroup))
-                .addGap(20, 20, 20)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextFieldApplication))
-                .addGap(20, 20, 20)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldUser)
-                    .addComponent(jLabel3))
-                .addGap(20, 20, 20)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jCheckBoxConfigurations)))
-                .addGap(20, 20, 20)
-                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jTextFieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addComponent(panelBorderConfigrations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(jButtonCreate)
-                .addGap(20, 20, 20))
+                panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelBorder1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabelTitle)
+                                .addGap(20, 20, 20)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jComboBoxGroup))
+                                .addGap(20, 20, 20)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabelGroupName)
+                                        .addComponent(jTextFieldGroupName))
+                                .addGap(20, 20, 20)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jTextFieldApplication))
+                                .addGap(20, 20, 20)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jTextFieldUser)
+                                        .addComponent(jLabel3))
+                                .addGap(20, 20, 20)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(20, 20, 20)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel5)
+                                        .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jCheckBoxConfigurations)))
+                                .addGap(20, 20, 20)
+                                .addGroup(panelBorder1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel11)
+                                        .addComponent(jTextFieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(20, 20, 20)
+                                .addComponent(panelBorderConfigrations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(jButtonCreate)
+                                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(panelBorder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jPasswordFieldMouseClicked(MouseEvent evt) {
+        jPasswordField.setText("");
+    }
 
     private void jButtonCreateActionPerformed() {
         try {
             ManagerConectionBD managerConectionBD = ManagerConectionBD.getInstance();
+            if (jTextFieldApplication.getText().isEmpty() || jTextFieldUser.getText().isEmpty()
+                    || jTextFieldEmail.getText().isEmpty() || jPasswordField.getPassword().length == 0
+                    || jTextFieldDescription.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", ALERT, JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
             ClavesDto clavesDto = ClavesDto.builder()
                     .nameApplication(jTextFieldApplication.getText())
                     .user(jTextFieldUser.getText())
                     .email(jTextFieldEmail.getText())
-                    .password(passwordB64)
+                    .password(passwordB64 != null ? passwordB64 : Base64.getEncoder().encodeToString(new String(jPasswordField.getPassword()).getBytes(StandardCharsets.UTF_8)))
                     .description(jTextFieldDescription.getText())
-                    .group(Objects.requireNonNull(jComboBoxGroup.getSelectedItem()).toString())
+                    .group(!Objects.requireNonNull(jComboBoxGroup.getSelectedItem()).toString().equals("Otro")
+                            ? jComboBoxGroup.getSelectedItem().toString() : jTextFieldGroupName.getText())
                     .key(keyB64)
                     .iv(iVB64)
                     .build();
             managerConectionBD.createRegister(clavesDto);
-        }
-        catch (SQLException ex) {
+            jTextFieldUser.setText("");
+            jTextFieldApplication.setText("");
+            jTextFieldEmail.setText("");
+            jPasswordField.setText("");
+            jTextFieldDescription.setText("");
+            jTextFieldGroupName.setText("");
+        } catch (SQLException ex) {
             Logger.getLogger(FormCreate.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Error creando el registro", ALERT, 0);
+            JOptionPane.showMessageDialog(null, "Error creando el registro", ALERT, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -403,12 +436,22 @@ public class FormCreate extends javax.swing.JPanel {
         jSliderNumUpperCase.addChangeListener(e -> jLabelnumUpperCase.setText(String.valueOf(jSliderNumUpperCase.getValue())));
     }
 
+    private void jComboBoxGroupActionPerformed() {
+        if ("Otro".equals(jComboBoxGroup.getSelectedItem())) {
+            jLabelGroupName.setEnabled(true);
+            jTextFieldGroupName.setEnabled(true);
+        } else {
+            jLabelGroupName.setEnabled(false);
+            jTextFieldGroupName.setEnabled(false);
+        }
+    }
+
     private void jButtonGenerateActionPerformed() throws InvalidAlgorithmParameterException, BadPaddingException, InvalidKeyException {// GEN-FIRST:event_jButtonGenerateActionPerformed
         if (Integer.parseInt(jLabelMinLength.getText()) > Integer.parseInt(jLabelMaxLength.getText())) {
-            JOptionPane.showMessageDialog(null, "La longitud mínima no puede ser mayor que la longitud máxima.", INFORMATION, 0);
+            JOptionPane.showMessageDialog(null, "La longitud mínima no puede ser mayor que la longitud máxima.", INFORMATION, JOptionPane.INFORMATION_MESSAGE);
         }
         if (Integer.parseInt(jLabelnumUpperCase.getText()) > Integer.parseInt(jLabelMinLength.getText())) {
-            JOptionPane.showMessageDialog(null, "El número de mayúsculas no puede ser mayor que la longitud mínima.", INFORMATION, 0);
+            JOptionPane.showMessageDialog(null, "El número de mayúsculas no puede ser mayor que la longitud mínima.", INFORMATION, JOptionPane.INFORMATION_MESSAGE);
         }
 
         var random = new SecureRandom();
@@ -428,7 +471,7 @@ public class FormCreate extends javax.swing.JPanel {
 
         var remainingLength = Integer.parseInt(jLabelMinLength.getText()) - Integer.parseInt(jLabelMaxLength.getText());
         if (filteredPool.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "El conjunto de caracteres disponible está vacío. Ajuste las configuraciones.", INFORMATION, 0);
+            JOptionPane.showMessageDialog(null, "El conjunto de caracteres disponible está vacío. Ajuste las configuraciones.", INFORMATION, JOptionPane.INFORMATION_MESSAGE);
         }
 
         IntStream.range(0, remainingLength)
@@ -451,8 +494,8 @@ public class FormCreate extends javax.swing.JPanel {
         jPasswordField.setText(maskedPassword);
         var secretKey = generateKey(128);
         if (secretKey == null) {
-            JOptionPane.showMessageDialog(null, "Ha fallado la generacion de secret Key", ALERT, 0);
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, "Ha fallado la generacion de secret Key", ALERT, JOptionPane.ERROR_MESSAGE);
+            return;
         }
         var keyBytes = secretKey.getEncoded();
         var iv = new byte[12];
@@ -470,10 +513,9 @@ public class FormCreate extends javax.swing.JPanel {
             keyGen.init(n);
             return keyGen.generateKey();
         } catch (NoSuchAlgorithmException ex) {
-            JOptionPane.showMessageDialog(null, "Error generando la Clave secreta", ALERT, 0);
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, "Error generando la Clave secreta", ALERT, JOptionPane.ERROR_MESSAGE);
+            return null;
         }
-        return null;
     }
 
     public static byte[] encryptPassword(byte[] password, byte[] keyBytes, byte[] iv) throws InvalidKeyException, InvalidAlgorithmParameterException, BadPaddingException {
@@ -484,14 +526,17 @@ public class FormCreate extends javax.swing.JPanel {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, gcmSpec);
             return cipher.doFinal(password);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException ex) {
-            JOptionPane.showMessageDialog(null, "Error encriptando la contraseña", ALERT, 0);
-            System.exit(0);
+            JOptionPane.showMessageDialog(null, "Error encriptando la contraseña", ALERT, JOptionPane.ERROR_MESSAGE);
+            return new byte[0];
         }
-        return new byte[0];
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+
+
     private javax.swing.JComboBox<String> jComboBoxGroup;
+
+
     private javax.swing.JLabel jLabelMaxLength;
     private javax.swing.JLabel jLabelMinLength;
     private javax.swing.JLabel jLabelTitle;
@@ -504,7 +549,10 @@ public class FormCreate extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldDescription;
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldExcludeSpecialChars;
+    private javax.swing.JTextField jTextFieldGroupName;
+    private javax.swing.JLabel jLabelGroupName;
     private javax.swing.JTextField jTextFieldUser;
+
     private com.arakamitech.accountsmanager.view.swing.PanelBorder panelBorderConfigrations;
     // End of variables declaration//GEN-END:variables
 
@@ -515,7 +563,7 @@ public class FormCreate extends javax.swing.JPanel {
     private static final String DIGITS = "0123456789";
     private static final String SPECIAL_CHARACTERS = "!@#$%^&*()-_=+[]{}|;:',.<>?/";
     private static final String SANSSERIF = "SansSerif";
-    private static final String ALERT = "ALERT";
+    private static final String ALERT = "Alerta";
     private static final String INFORMATION = "Información";
     private final StringBuilder finalPassword = new StringBuilder();
     private String passwordB64;
