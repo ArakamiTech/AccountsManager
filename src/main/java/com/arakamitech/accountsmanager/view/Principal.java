@@ -2,7 +2,7 @@ package com.arakamitech.accountsmanager.view;
 
 import com.arakamitech.accountsmanager.logic.conection.ManagerConectionBD;
 import com.arakamitech.accountsmanager.view.swing.FormCreate;
-import com.arakamitech.accountsmanager.view.swing.FormHome;
+import com.arakamitech.accountsmanager.view.swing.FormTable;
 
 import java.awt.Color;
 import java.io.Serial;
@@ -130,7 +130,7 @@ public class Principal extends javax.swing.JFrame {
                     setForm(new FormCreate());
                 } else {
                     try {
-                        setForm(new FormHome(listMenu.get(index - 3)));
+                        setForm(new FormTable(listMenu.get(index - 3)));
                     } catch (SQLException ex) {
                         LOGGER.info("Inicio de la funcion createTable");
                     }

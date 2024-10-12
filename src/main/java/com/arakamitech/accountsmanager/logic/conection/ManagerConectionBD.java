@@ -22,7 +22,7 @@ public class ManagerConectionBD implements Serializable {
     private static final String ALERT = "Alerta";
     private static final String UPDATE = "UPDATE `claves` SET `name_application` = ?, `user` = ?, `email` = ?, `password` = ?, `description` = ?, `group` = ?, `key` = ?, `iv` = ? WHERE `id_claves` = ?";
     private static final String INSERT = "INSERT INTO `claves` (`name_application`, `user`, `email`, `password`, `description`, `group`, `key`, `iv`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String DELETE = "DELETE FROM `claves` WHERE `id_claves` = ?";
+    private static final String DELETE = "DELETE FROM `claves` WHERE `name_application` = ? AND `user` = ? AND `email` = ? AND `password` = ? AND `description` = ?";
     private static final String SELECT_GROUP = "SELECT DISTINCT `group` FROM `claves` ORDER BY `group` ASC";
     private static final String SELECT_CLAVES = "SELECT * FROM `claves` WHERE `group` = ?";
 
@@ -108,19 +108,25 @@ public class ManagerConectionBD implements Serializable {
         } catch (SQLException e) {
             LOGGER.severe("Error en editRegister: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Error editando el registro", ALERT, JOptionPane.ERROR_MESSAGE);
+            return;
         }
         LOGGER.info("Fin de la función editRegister");
         JOptionPane.showMessageDialog(null, "Registro editado con exito", ALERT, JOptionPane.ERROR_MESSAGE);
     }
 
-    public void deleteRegister(int idClaves) {
+    public void deleteRegister(String nameApplication, String user, String email, String password, String description) {
         LOGGER.info("Inicio de la función deleteRegister");
         try (var statement = connection.prepareStatement(DELETE)) {
-            statement.setInt(1, idClaves);
+            statement.setString(1, nameApplication);
+            statement.setString(2, user);
+            statement.setString(3, email);
+            statement.setString(4, password);
+            statement.setString(5, description);
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.severe("Error en deleteRegister: " + e.getMessage());
             JOptionPane.showMessageDialog(null, "Error eliminando el registro", ALERT, JOptionPane.ERROR_MESSAGE);
+            return;
         }
         LOGGER.info("Fin de la función deleteRegister");
         JOptionPane.showMessageDialog(null, "Registro eliminado con exito", ALERT, JOptionPane.ERROR_MESSAGE);
@@ -170,17 +176,17 @@ public class ManagerConectionBD implements Serializable {
     }
 
     private String sqlCreate() {
-        return "CREATE TABLE IF NOT EXISTS `claves` (" +
-               "  `id_claves` INT NOT NULL AUTO_INCREMENT," +
-               "  `name_application` VARCHAR(45) NOT NULL," +
-               "  `user` VARCHAR(45) NULL," +
-               "  `email` VARCHAR(100) NULL," +
-               "  `password` VARCHAR(250) NOT NULL," +
-               "  `description` VARCHAR(100) NULL," +
-               "  `group` VARCHAR(45) NOT NULL," +
-               "  `key` VARCHAR(100) NULL," +
-               "  `iv` VARCHAR(100) NULL," +
-               "  PRIMARY KEY (`id_claves`)," +
-               "  UNIQUE (`id_claves`))";
+        return "CREATE TABLE IF NOT EXISTS `claves` ("
+                + "  `id_claves` INT NOT NULL AUTO_INCREMENT,"
+                + "  `name_application` VARCHAR(45) NOT NULL,"
+                + "  `user` VARCHAR(45) NULL,"
+                + "  `email` VARCHAR(100) NULL,"
+                + "  `password` VARCHAR(250) NOT NULL,"
+                + "  `description` VARCHAR(100) NULL,"
+                + "  `group` VARCHAR(45) NOT NULL,"
+                + "  `key` VARCHAR(100) NULL,"
+                + "  `iv` VARCHAR(100) NULL,"
+                + "  PRIMARY KEY (`id_claves`),"
+                + "  UNIQUE (`id_claves`))";
     }
 }

@@ -8,10 +8,13 @@ C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\acco
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\Principal.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\model\SearchText.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\enums\MenuType.java
+C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\swing\FormTable.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\swing\MenuItem.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\components\Header.java
+C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\components\ButtonEditor.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\model\ListMenu.java
-C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\swing\FormHome.java
+C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\components\ButtonRenderer.java
+C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\view\components\Button.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\conection\ManagerConectionBD.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\event\EventMenuSelected.java
 C:\Users\crist\Documents\Java\AccountsManager\src\main\java\com\arakamitech\accountsmanager\logic\model\ModelMenu.java

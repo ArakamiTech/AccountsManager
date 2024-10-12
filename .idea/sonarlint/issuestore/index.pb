@@ -24,10 +24,6 @@ Hsrc/main/java/com/arakamitech/accountsmanager/view/swing/FormCreate.form,7\d\7
 v
 Fsrc/main/java/com/arakamitech/accountsmanager/view/swing/MenuItem.form,f\a\fa62e58296a3830a48e1daa794503f1bb2d5f9e1
 v
-Fsrc/main/java/com/arakamitech/accountsmanager/view/swing/FormHome.form,c\4\c4df464e2f5377c9ed088f6be0297e185cf7bc3f
-v
-Fsrc/main/java/com/arakamitech/accountsmanager/view/swing/FormHome.java,4\5\45bea8325f8cc0b99a93e5a7238d8f5ce40a6bcc
-v
 Fsrc/main/java/com/arakamitech/accountsmanager/view/swing/MenuItem.java,3\0\308ef3f0553165fac80abffb504f14406c484fa6
 q
 Asrc/main/java/com/arakamitech/accountsmanager/view/Principal.form,d\3\d36d5403471964322059909d501a1104bb54e034
