@@ -16,13 +16,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 
 /**
- *
  * @author cristhian
  */
 public class FormTable extends javax.swing.JPanel {
 
     @Serial
     private static final long serialVersionUID = 1L;
+    int isEdit = 0;
+    private int editingRow = -1;
 
     public FormTable(String group) throws SQLException {
         initComponents();
@@ -32,7 +33,6 @@ public class FormTable extends javax.swing.JPanel {
             LOGGER.severe("Error Inicializando ManagerConectionBD: " + e.getMessage());
         }
 
-        // Usar la clase personalizada Button
         editButton = new com.arakamitech.accountsmanager.view.components.Button();
         javax.swing.ImageIcon editIcon = new javax.swing.ImageIcon("src/main/java/com/arakamitech/accountsmanager/view/icons/Edit.PNG");
         editButton.setIcon(editIcon);
@@ -41,7 +41,6 @@ public class FormTable extends javax.swing.JPanel {
         javax.swing.ImageIcon deleteIcon = new javax.swing.ImageIcon("src/main/java/com/arakamitech/accountsmanager/view/icons/Delete.PNG");
         deleteButton.setIcon(deleteIcon);
 
-        // Configuración del JScrollPane
         jScrollPane1.setVerticalScrollBar(new JScrollBar());
         jScrollPane1.getVerticalScrollBar().setBackground(Color.WHITE);
         jScrollPane1.getViewport().setBackground(Color.WHITE);
@@ -49,21 +48,37 @@ public class FormTable extends javax.swing.JPanel {
         panel.setBackground(Color.WHITE);
         jScrollPane1.setCorner(javax.swing.ScrollPaneConstants.UPPER_RIGHT_CORNER, panel);
 
-        // Añadir filas
         addRow(group);
         jLabelTitle.setText("Cuentas Guardadas de " + group);
         table.setRowHeight(50);
-        // Usar el renderer y editor personalizados
-        table.getColumn("E").setCellRenderer(new ButtonRenderer());
-        table.getColumn("E").setCellEditor(new ButtonEditor(e -> {
-            managerConectionBD.editRegister(null);  // Acción de edición
+
+        table.getColumn("Edit").setCellRenderer(new ButtonRenderer());
+        table.getColumn("Edit").setCellEditor(new ButtonEditor(e -> {
+            int selectedRow = table.getSelectedRow();
+            System.out.println((Integer) table.getValueAt(selectedRow, 0));
+            System.out.println((String) table.getValueAt(selectedRow, 2));
+            System.out.println((String) table.getValueAt(selectedRow, 3));
+            System.out.println((String) table.getValueAt(selectedRow, 4));
+            System.out.println((String) table.getValueAt(selectedRow, 5));
+            System.out.println((String) table.getValueAt(selectedRow, 1));
+            ClavesDto clavesDto = ClavesDto.builder()
+                    .user((String) table.getValueAt(selectedRow, 2))
+                    .email((String) table.getValueAt(selectedRow, 3))
+                    .password((String) table.getValueAt(selectedRow, 4))
+                    .description((String) table.getValueAt(selectedRow, 5))
+                    .nameApplication((String) table.getValueAt(selectedRow, 1))
+                    //.iv((String) table.getValueAt(selectedRow, 5))
+                    //.key((String) table.getValueAt(selectedRow, 7))
+                    .build();
+            managerConectionBD.editRegister(clavesDto);
+            table.repaint();
         }));
 
-        table.getColumn("D").setCellRenderer(new ButtonRenderer());
-        table.getColumn("D").setCellEditor(new ButtonEditor(e -> {
+        table.getColumn("Delete").setCellRenderer(new ButtonRenderer());
+        table.getColumn("Delete").setCellEditor(new ButtonEditor(e ->
+        {
             int selectedRow = table.getSelectedRow();
             if (selectedRow != -1) {
-                Integer id = (Integer) table.getValueAt(selectedRow, 0);
                 String nameApplication = (String) table.getValueAt(selectedRow, 1);
                 String user = (String) table.getValueAt(selectedRow, 2);
                 String email = (String) table.getValueAt(selectedRow, 3);
@@ -71,6 +86,7 @@ public class FormTable extends javax.swing.JPanel {
                 String description = (String) table.getValueAt(selectedRow, 5);
                 managerConectionBD.deleteRegister(nameApplication, user, email, password, description);
             }
+            table.repaint();
         }));
     }
 
@@ -97,14 +113,14 @@ public class FormTable extends javax.swing.JPanel {
 
             },
             new String [] {
-                "id", "Aplicación", "Usuario", "Correo", "Contraseña", "Descripción", "E", "D"
+                "id", "Aplicación", "Usuario", "Correo", "Contraseña", "Descripción", "Key", "Iv", "Edit", "Delete"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true
+                false, false, true, true, true, false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -130,12 +146,18 @@ public class FormTable extends javax.swing.JPanel {
             table.getColumnModel().getColumn(3).setMinWidth(120);
             table.getColumnModel().getColumn(3).setPreferredWidth(120);
             table.getColumnModel().getColumn(3).setMaxWidth(120);
-            table.getColumnModel().getColumn(6).setMinWidth(20);
-            table.getColumnModel().getColumn(6).setPreferredWidth(20);
-            table.getColumnModel().getColumn(6).setMaxWidth(20);
-            table.getColumnModel().getColumn(7).setMinWidth(20);
-            table.getColumnModel().getColumn(7).setPreferredWidth(20);
-            table.getColumnModel().getColumn(7).setMaxWidth(20);
+            table.getColumnModel().getColumn(6).setMinWidth(0);
+            table.getColumnModel().getColumn(6).setPreferredWidth(0);
+            table.getColumnModel().getColumn(6).setMaxWidth(0);
+            table.getColumnModel().getColumn(7).setMinWidth(0);
+            table.getColumnModel().getColumn(7).setPreferredWidth(0);
+            table.getColumnModel().getColumn(7).setMaxWidth(0);
+            table.getColumnModel().getColumn(8).setMinWidth(20);
+            table.getColumnModel().getColumn(8).setPreferredWidth(20);
+            table.getColumnModel().getColumn(8).setMaxWidth(20);
+            table.getColumnModel().getColumn(9).setMinWidth(20);
+            table.getColumnModel().getColumn(9).setPreferredWidth(20);
+            table.getColumnModel().getColumn(9).setMaxWidth(20);
         }
 
         javax.swing.GroupLayout panelBorder1Layout = new javax.swing.GroupLayout(panelBorder1);
@@ -196,12 +218,21 @@ public class FormTable extends javax.swing.JPanel {
         LOGGER.info("Inicio metodo addRow llenando la tabla");
         var clavesDtoList = managerConectionBD.getClaves(group);
         for (ClavesDto clavesDto : clavesDtoList) {
-            System.out.println("clavesDto.getIdClaves()" + clavesDto.getIdClaves());
-            table.addRow(new Object[]{clavesDto.getIdClaves(), clavesDto.getNameApplication(), clavesDto.getUser(),
-                clavesDto.getEmail(), clavesDto.getPassword(),
-                clavesDto.getDescription(), add(editButton), add(deleteButton)});
+            LOGGER.info("Inicio metodo addRow llenando la tabla");
+            table.addRow(new Object[]{
+                    clavesDto.getIdClaves(),
+                    clavesDto.getNameApplication(),
+                    clavesDto.getUser(),
+                    clavesDto.getEmail(),
+                    clavesDto.getPassword(),
+                    clavesDto.getDescription(),
+                    clavesDto.getKey(),
+                    clavesDto.getIv(),
+                    add(editButton),
+                    add(deleteButton)
+            });
         }
-        LOGGER.info("Inicio metodo addRow llenando la tabla");
+        LOGGER.info("Fin metodo addRow llenando la tabla");
     }
 
 }

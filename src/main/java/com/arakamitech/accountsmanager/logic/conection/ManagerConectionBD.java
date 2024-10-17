@@ -20,7 +20,7 @@ public class ManagerConectionBD implements Serializable {
     private static ManagerConectionBD instance;
     private transient Connection connection;
     private static final String ALERT = "Alerta";
-    private static final String UPDATE = "UPDATE `claves` SET `name_application` = ?, `user` = ?, `email` = ?, `password` = ?, `description` = ?, `group` = ?, `key` = ?, `iv` = ? WHERE `id_claves` = ?";
+    private static final String UPDATE = "UPDATE `claves` SET `user` = ?, `email` = ?, `password` = ? WHERE `description` = ? AND `name_application` = ?";
     private static final String INSERT = "INSERT INTO `claves` (`name_application`, `user`, `email`, `password`, `description`, `group`, `key`, `iv`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM `claves` WHERE `name_application` = ? AND `user` = ? AND `email` = ? AND `password` = ? AND `description` = ?";
     private static final String SELECT_GROUP = "SELECT DISTINCT `group` FROM `claves` ORDER BY `group` ASC";
@@ -95,15 +95,11 @@ public class ManagerConectionBD implements Serializable {
     public void editRegister(ClavesDto clavesDto) {
         LOGGER.info("Inicio de la función editRegister");
         try (var statement = connection.prepareStatement(UPDATE)) {
-            statement.setString(1, clavesDto.getNameApplication());
-            statement.setString(2, clavesDto.getUser());
-            statement.setString(3, clavesDto.getEmail());
-            statement.setString(4, clavesDto.getPassword());
-            statement.setString(5, clavesDto.getDescription());
-            statement.setString(6, clavesDto.getGroup());
-            statement.setString(7, clavesDto.getKey());
-            statement.setString(8, clavesDto.getIv());
-            statement.setInt(9, clavesDto.getIdClaves());
+            statement.setString(1, clavesDto.getUser());
+            statement.setString(2, clavesDto.getEmail());
+            statement.setString(3, clavesDto.getPassword());
+            statement.setString(4, clavesDto.getDescription());
+            statement.setString(5, clavesDto.getNameApplication());
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.severe("Error en editRegister: " + e.getMessage());
@@ -177,7 +173,7 @@ public class ManagerConectionBD implements Serializable {
 
     private String sqlCreate() {
         return "CREATE TABLE IF NOT EXISTS `claves` ("
-                + "  `id_claves` INT NOT NULL AUTO_INCREMENT,"
+                + "  `id_claves` INT AUTO_INCREMENT,"
                 + "  `name_application` VARCHAR(45) NOT NULL,"
                 + "  `user` VARCHAR(45) NULL,"
                 + "  `email` VARCHAR(100) NULL,"
@@ -189,4 +185,5 @@ public class ManagerConectionBD implements Serializable {
                 + "  PRIMARY KEY (`id_claves`),"
                 + "  UNIQUE (`id_claves`))";
     }
+
 }

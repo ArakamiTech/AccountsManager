@@ -58,3 +58,7 @@ w
 Gsrc/main/java/com/arakamitech/accountsmanager/logic/model/ListMenu.java,4\5\456be90d52517311b897963260ce39252be00329
 q
 Asrc/main/java/com/arakamitech/accountsmanager/view/Principal.java,3\c\3c53132b7421add0481a9d637991cb24ad5df3e4
+y
+Isrc/main/java/com/arakamitech/accountsmanager/view/components/Button.java,8\5\8524eef67807164db923e4f9a8a9053dd0f84a59
+w
+Gsrc/main/java/com/arakamitech/accountsmanager/view/swing/FormTable.java,5\7\574514318be0bdfc806581209b5d13dfdbdf6bd3

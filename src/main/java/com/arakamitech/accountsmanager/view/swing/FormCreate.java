@@ -42,6 +42,7 @@ public class FormCreate extends javax.swing.JPanel {
     public FormCreate() {
         try {
             initComponents();
+            jComboBoxGroup.setSelectedIndex(0);
             jLabelTitle.setText("Creacion de Contraseñas ");
             jLabelTitle.setBackground(new java.awt.Color(127, 127, 127));
             jLabelTitle.setFont(new java.awt.Font(SANSSERIF, Font.PLAIN, 18));
