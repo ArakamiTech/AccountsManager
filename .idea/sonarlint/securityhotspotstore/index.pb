@@ -62,3 +62,9 @@ y
 Isrc/main/java/com/arakamitech/accountsmanager/view/components/Button.java,8\5\8524eef67807164db923e4f9a8a9053dd0f84a59
 w
 Gsrc/main/java/com/arakamitech/accountsmanager/view/swing/FormTable.java,5\7\574514318be0bdfc806581209b5d13dfdbdf6bd3
+
+Osrc/main/java/com/arakamitech/accountsmanager/view/components/ButtonEditor.java,6\0\6017c0372623155cb6d591055bdc946676c96dd6
+w
+Gsrc/main/java/com/arakamitech/accountsmanager/view/swing/FormTable.form,b\e\bead9f60b3cc2c3cf76cd1eca16c80e750625647
+Å
+Qsrc/main/java/com/arakamitech/accountsmanager/view/components/ButtonRenderer.java,a\2\a2db346741d243373344569c92361499ebc91a95

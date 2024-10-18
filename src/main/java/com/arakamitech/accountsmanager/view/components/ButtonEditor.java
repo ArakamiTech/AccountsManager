@@ -21,8 +21,7 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value,
             boolean isSelected, int row, int column) {
-        if (value instanceof JButton) {
-            JButton originalButton = (JButton) value;
+        if (value instanceof JButton originalButton) {
             button.setIcon(originalButton.getIcon());
             button.setBackground(originalButton.getBackground());
 

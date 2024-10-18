@@ -9,8 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 public class Button extends JButton {
 
-    private Color shadowColor = new Color(200, 200, 200); // Color del sombreado
-    private boolean isPressed = false;
+    private final Color shadowColor = new Color(200, 200, 200); // Color del sombreado
 
     public Button() {
         setContentAreaFilled(false);
@@ -20,13 +19,11 @@ public class Button extends JButton {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {    
-                isPressed = true; // Indicamos que está presionado
                 setBackground(shadowColor); // Cambiamos a color gris
             }
 
             @Override
             public void mouseReleased(MouseEvent me) {
-                isPressed = false; // Botón liberado
                 setBackground(Color.WHITE); // Restauramos el color de fondo
                 repaint();
             }

@@ -2,10 +2,8 @@ package com.arakamitech.accountsmanager.view.swing;
 
 import com.arakamitech.accountsmanager.logic.conection.ManagerConectionBD;
 import com.arakamitech.accountsmanager.logic.dto.ClavesDto;
-import com.arakamitech.accountsmanager.view.Principal;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.io.Serial;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
@@ -37,7 +35,6 @@ public class FormCreate extends javax.swing.JPanel {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    private Principal principal;
 
     public FormCreate() {
         try {
@@ -151,6 +148,7 @@ public class FormCreate extends javax.swing.JPanel {
         jCheckBoxConfigurations.setFont(new java.awt.Font(SANSSERIF, Font.BOLD, 14)); // NOI18N
         jCheckBoxConfigurations.setText("Configuración");
         jCheckBoxConfigurations.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jCheckBoxConfigurationsMouseClicked();
             }
@@ -201,12 +199,13 @@ public class FormCreate extends javax.swing.JPanel {
             try {
                 jButtonGenerateActionPerformed();
             } catch (InvalidAlgorithmParameterException | BadPaddingException | InvalidKeyException e) {
-                throw new RuntimeException(e);
+               return;
             }
         });
         jPasswordField.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPasswordFieldMouseClicked(evt);
+                jPasswordFieldMouseClicked();
             }
         });
         jComboBoxGroup.addItem("Otro");
@@ -379,7 +378,7 @@ public class FormCreate extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPasswordFieldMouseClicked(MouseEvent evt) {
+    private void jPasswordFieldMouseClicked() {
         jPasswordField.setText("");
     }
 
